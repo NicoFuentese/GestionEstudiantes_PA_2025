@@ -73,6 +73,24 @@ public class Nivel {
             boolean estadoAcademico) {
         return agregarAlumno(new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, estadoAcademico));
     }
+    
+    //Buscar alumno
+    public Alumno buscarAlumno(String rut){
+        for (Alumno a: alumnos) {
+            if (a.getRut().equalsIgnoreCase(rut)) return a;
+        }
+        return null;
+    }
+    
+    public List<Alumno> buscarAlumnoPorNombre (String fragmento) {
+        List<Alumno> res = new ArrayList<>();
+        
+        for (Alumno a: alumnos) {
+            String nombreCompleto = (a.getNombre1() + " " + a.getApellido1()).toLowerCase();
+            if (nombreCompleto.contains(fragmento.toLowerCase())) res.add(a);
+        }
+        return res;
+    }
 
     @Override
     public String toString() {
