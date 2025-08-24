@@ -49,8 +49,3 @@ public class Colegio {
     public void setPrivada(boolean privada) {this.privada = privada;}
     
 }
-
-class Nivel{
-    
-    
-}
