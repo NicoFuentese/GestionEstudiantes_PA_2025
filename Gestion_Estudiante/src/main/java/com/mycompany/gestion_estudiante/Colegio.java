@@ -14,48 +14,67 @@ public class Colegio {
     private String nombre;
     private String direccion;
     private String telefono;
-    private LinkedList<Nivel> grados;
+    private List<Nivel> niveles;
     private HashMap<String, Alumno> indiceAlumnos;
     private boolean privada;
-    //pruebaaaa commit
     
+    //constructor
     public Colegio(String nombre, String direccion, String telefono, boolean privada)
     {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.privada = privada;
-        this.grados = new LinkedList<Nivel>();
+        this.niveles = new ArrayList<>();
+        this.indiceAlumnos = new HashMap<>();
     }
-    public Colegio(String nombre, String direccion, String telefono){this(nombre, direccion, telefono, false);}
-    public Colegio(String nombre, String direccion){this(nombre, direccion, " ");}
-    public Colegio(String nombre){this(nombre, " ", " ");}
-    public Colegio(){this(" ", " ", " ");}
     
-    public String getNombre() {return nombre;}
+    //get y setters
+    public List<Nivel> getNiveles() {
+        return niveles;
+    }
+        
+    public String getNombre() {
+        return nombre;
+    
+    }
+    
     public void setNombre(String nombre) {
-        if(nombre == " "){this.nombre = nombre;}
-        else System.out.println("Tu no puedes cambiar el nombre del colegio"); //You cannot chargue school's name
+        if(nombre == null || nombre.trim().isEmpty()) return;
+        this.nombre = nombre;
     }
 
-    public String getDireccion() {return direccion;}
+    public String getDireccion() {
+        return direccion;
+    
+    }
     public void setDireccion(String direccion) {
-        if(direccion == " "){this.direccion = direccion;}
-        else System.out.println("Tu no puedes cambiar la dirección del colegio");
+        if(direccion == null || direccion.trim().isEmpty()) return;
+        this.direccion = direccion;
     }
     
-    public String getTelefono() {return telefono;}
-    public void setTelefono(String telefono) {this.telefono = telefono;}
+    public String getTelefono() {
+        return telefono;
+    }
+    
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 
-    public boolean isPrivada() {return privada;}
-    public void setPrivada(boolean privada) {this.privada = privada;}
+    public boolean getPrivada() {
+        return privada;
+    }
+    
+    public void setPrivada(boolean privada) {
+        this.privada = privada;
+    }
     
     public boolean agregarAlumno(Alumno aa){
         if(aa == null)return false;
         indiceAlumnos.put(aa.getRut(), aa);
-        
         return true;
     }
+    
     public Alumno buscarAlumno(String rutAlumno)
     {
         if(!(indiceAlumnos.containsKey(rutAlumno))) return null;
