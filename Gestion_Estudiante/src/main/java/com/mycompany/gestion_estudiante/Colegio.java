@@ -15,6 +15,7 @@ public class Colegio {
     private String direccion;
     private String telefono;
     private LinkedList<Nivel> grados;
+    private HashMap<String, Alumno> indiceAlumnos;
     private boolean privada;
     
     public Colegio(String nombre, String direccion, String telefono, boolean privada)
