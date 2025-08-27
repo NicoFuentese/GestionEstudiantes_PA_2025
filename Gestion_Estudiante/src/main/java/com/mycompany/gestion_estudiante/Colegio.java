@@ -17,6 +17,7 @@ public class Colegio {
     private LinkedList<Nivel> grados;
     private HashMap<String, Alumno> indiceAlumnos;
     private boolean privada;
+    //pruebaaaa commit
     
     public Colegio(String nombre, String direccion, String telefono, boolean privada)
     {
@@ -48,5 +49,7 @@ public class Colegio {
 
     public boolean isPrivada() {return privada;}
     public void setPrivada(boolean privada) {this.privada = privada;}
+    
+    
     
 }
