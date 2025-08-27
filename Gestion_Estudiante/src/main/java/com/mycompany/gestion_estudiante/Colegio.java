@@ -56,5 +56,10 @@ public class Colegio {
         
         return true;
     }
+    public Alumno buscarAlumno(String rutAlumno)
+    {
+        if(!(indiceAlumnos.containsKey(rutAlumno))) return null;
+        return indiceAlumnos.get(rutAlumno);
+    }
     
 }
