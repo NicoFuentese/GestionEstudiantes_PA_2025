@@ -50,6 +50,11 @@ public class Colegio {
     public boolean isPrivada() {return privada;}
     public void setPrivada(boolean privada) {this.privada = privada;}
     
-    
+    public boolean agregarAlumno(Alumno aa){
+        if(aa == null)return false;
+        indiceAlumnos.put(aa.getRut(), aa);
+        
+        return true;
+    }
     
 }
