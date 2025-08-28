@@ -30,13 +30,8 @@ public class Colegio {
     }
     
     //get y setters
-    public List<Nivel> getNiveles() {
-        return niveles;
-    }
-        
     public String getNombre() {
         return nombre;
-    
     }
     
     public void setNombre(String nombre) {
@@ -69,10 +64,25 @@ public class Colegio {
         this.privada = privada;
     }
     
-    public boolean agregarAlumno(Alumno aa){
+    public List<Nivel> getNiveles() {
+        return niveles;
+    }
+    
+    public HashMap<String, Alumno> getIndiceAlumnos() {
+        return indiceAlumnos;
+    }
+    
+    //metodos alumnos
+    public boolean registrarAlumno(Alumno aa){
         if(aa == null)return false;
         indiceAlumnos.put(aa.getRut(), aa);
         return true;
+    }
+    
+    public boolean registrarAlumno (String rut, String nombre1, 
+            String nombre2, String apellido1, String apellido2, 
+            int telefono, String email, boolean estadoAcademico) {
+        return registrarAlumno(new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, estadoAcademico));
     }
     
     public Alumno buscarAlumno(String rutAlumno)
@@ -80,5 +90,23 @@ public class Colegio {
         if(!(indiceAlumnos.containsKey(rutAlumno))) return null;
         return indiceAlumnos.get(rutAlumno);
     }
+    
+    //metodos niveles
+    public boolean agregarNivel (Nivel n) {
+        return niveles.add(n);
+    }
+    
+    public Nivel buscarNivel(int i) {
+        if (i >= 0 && i < niveles.size()) {
+            return niveles.get(i);
+        }
+        return null;
+    }
+    
+    
+    
+    
+    //Datos iniciales
+    
     
 }
