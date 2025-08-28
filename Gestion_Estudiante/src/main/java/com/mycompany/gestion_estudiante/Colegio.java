@@ -119,6 +119,14 @@ public class Colegio {
         col.agregarNivel(n1);
         col.agregarNivel(n2);
         
+        //alumnos
+        col.registrarAlumno("11.111.111-1", "Ana", "Paula", "Perez","Roncaglia", 997205530, "ana@correo.cl", true);
+        col.registrarAlumno("22.222.222-2", "Luis", "Emilio", "Ramirez","Roco", 922334455, "luis@correo.cl", true);
+        
+        //asignar nivel
+        n1.agregarAlumno(col.getIndiceAlumnos().get("11.111.111-1"));
+        n1.agregarAlumno(col.getIndiceAlumnos().get("22.222.222-2"));
+        
         return col;
     }
     
