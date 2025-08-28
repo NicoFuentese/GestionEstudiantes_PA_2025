@@ -26,6 +26,14 @@ public class Gestion_Estudiante {
             System.out.println("0) Salir"); 
             System.out.println("Opcion: "); 
             opcion = leerEntero();
+            
+            switch(opcion) {
+                case 1 -> insertarAlumnoEnNivel(colegio);
+                case 2 -> listarAlumnosPorNivel(colegio);
+                case 3 -> listarNiveles(colegio);
+                case 0 -> System.out.println("Hasta luego!");
+                default -> System.out.println("Opcion invalida.");
+            }
         } while(opcion != 0);
     }
     
