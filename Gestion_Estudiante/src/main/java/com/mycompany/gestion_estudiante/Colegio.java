@@ -103,10 +103,23 @@ public class Colegio {
         return null;
     }
     
-    
-    
-    
     //Datos iniciales
-    
+    public static Colegio demo() {
+        Colegio col = new Colegio("Colegio Saint Dominic", 
+                "7 norte con 1 poniente",
+                "+56911223344",
+                true);
+        
+        Nivel n1 = new Nivel("primer año",2025,"diurna","A",60,true);
+        Nivel n2 = new Nivel("segundo año",2025,"dierna","B",50,true);
+        
+        n1.getMalla().add(new Asignatura("MAT101","Cálculo I",6));
+        n2.getMalla().add(new Asignatura("EST201","Estadística",6));
+        
+        col.agregarNivel(n1);
+        col.agregarNivel(n2);
+        
+        return col;
+    }
     
 }
