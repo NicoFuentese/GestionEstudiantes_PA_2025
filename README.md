@@ -89,14 +89,14 @@ En el menú, selecciona una opción:
 
 2: Lista alumnos en un nivel. Por ejemplo:Seleccion indice de nivel: 0
 
-Alumnos en Nivel{nombre='primer año', anio=2025, jornada='diurna', paralelo='A', cantidadMaximaAlumnos=60, activo=Sí}:
+Alumnos en Nivel{nombre ='primer año', anio = 2025, jornada = 'diurna', paralelo = 'A', cantidadMaximaAlumnos = 60, activo = Sí}:
 
 - Alumno{rut = 11.111.111-1, nombre = Ana Paula Perez Roncaglia, telefono = 997205530, email = ana@correo.cl, Estado = Activo}
 - Alumno{rut = 22.222.222-2, nombre = Luis Emilio Ramirez Roco, telefono = 922334455, email = luis@correo.cl, Estado = Activo}
 
 
 3: Lista niveles. Por ejemplo:Niveles del colegio:
-0) Nivel{nombre='primer año', anio=2025, jornada='diurna', paralelo='A', cantidadMaximaAlumnos=60, activo=Sí}
+0) Nivel{nombre='primer año', anio = 2025, jornada = 'diurna', paralelo = 'A', cantidadMaximaAlumnos = 60, activo = Sí}
 1) Nivel{nombre ='segundo año', anio = 2025, jornada ='diurna', paralelo ='B', cantidadMaximaAlumnos = 50, activo = Sí}
 
 
