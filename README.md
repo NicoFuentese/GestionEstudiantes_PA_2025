@@ -1,5 +1,6 @@
 Gestión de Estudiantes
-Aplicación en Java para gestionar estudiantes en un colegio, permitiendo registrar alumnos en niveles, listar alumnos por nivel y listar niveles. Utiliza colecciones (ArrayList y HashMap) para administrar datos y BufferedReader para leer entradas del usuario desde la consola. Incluye un método demo para inicializar datos de ejemplo.
+
+Es una aplicación en Java para gestionar estudiantes en un colegio, permitiendo registrar alumnos en niveles, listar alumnos por nivel y listar niveles. Utiliza colecciones (ArrayList y HashMap) para administrar datos y BufferedReader para leer entradas del usuario desde la consola. Incluye un método demo para inicializar datos de ejemplo.
 Requisitos
 
 - Java: JDK 11 o superior
