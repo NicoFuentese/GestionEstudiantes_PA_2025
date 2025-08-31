@@ -107,10 +107,10 @@ Alumnos en Nivel{nombre ='primer año', anio = 2025, jornada = 'diurna', paralel
 
 Notas
 
-Lista aprobados en Alumno: La lista List<Nivel> aprobados no se usa en el programa actual, lo que sugiere que la funcionalidad de marcar niveles o asignaturas como aprobados no está implementada. Esto podría extenderse para registrar asignaturas aprobadas (por ejemplo, cambiando a List<Asignatura>).
-Persistencia de datos: El programa usa datos hardcodeados del método demo. Para usar archivos de texto (por ejemplo, alumnos.txt, niveles.txt), se necesitarían métodos adicionales con BufferedReader.
-Validaciones: El programa valida entradas numéricas y nombres/direcciones no vacíos, pero no valida el formato de RUT, email, o teléfono. Esto podría mejorarse si los requisitos lo especifican.
-Si encuentras errores al ejecutar, verifica que la versión de Java sea compatible y que los archivos .java estén en el directorio correcto (src/com/mycompany/gestion_estudiante).
+- Lista aprobados en Alumno: La lista List<Nivel> aprobados no se usa en el programa actual, lo que sugiere que la funcionalidad de marcar niveles o asignaturas como aprobados no está implementada. Esto podría extenderse para registrar asignaturas aprobadas (por ejemplo, cambiando a List<Asignatura>).
+- Persistencia de datos: El programa usa datos hardcodeados del método demo. Para usar archivos de texto (por ejemplo, alumnos.txt, niveles.txt), se necesitarían métodos adicionales con BufferedReader.
+- Validaciones: El programa valida entradas numéricas y nombres/direcciones no vacíos, pero no valida el formato de RUT, email, o teléfono. Esto podría mejorarse si los requisitos lo especifican.
+- Si encuentras errores al ejecutar, verifica que la versión de Java sea compatible y que los archivos .java estén en el directorio correcto (src/com/mycompany/gestion_estudiante).
 
 Contribuciones
 
