@@ -95,12 +95,13 @@ Alumnos en Nivel{nombre ='primer año', anio = 2025, jornada = 'diurna', paralel
 - Alumno{rut = 22.222.222-2, nombre = Luis Emilio Ramirez Roco, telefono = 922334455, email = luis@correo.cl, Estado = Activo}
 
 
-3: Lista niveles. Por ejemplo:Niveles del colegio:
-0) Nivel{nombre = 'primer año', anio = 2025, jornada = 'diurna', paralelo = 'A', cantidadMaximaAlumnos = 60, activo = Sí}
-1) Nivel{nombre ='segundo año', anio = 2025, jornada ='diurna', paralelo ='B', cantidadMaximaAlumnos = 50, activo = Sí}
+3: Lista niveles. Por ejemplo: Niveles del colegio:
+
+- 0) Nivel{nombre = 'primer año', anio = 2025, jornada = 'diurna', paralelo = 'A', cantidadMaximaAlumnos = 60, activo = Sí}
+- 1) Nivel{nombre ='segundo año', anio = 2025, jornada ='diurna', paralelo ='B', cantidadMaximaAlumnos = 50, activo = Sí}
 
 
-0: Sale del programa.
+- 0: Sale del programa.
 
 
 
