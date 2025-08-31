@@ -39,23 +39,24 @@ Sigue el menú en consola para interactuar con la aplicación (insertar alumnos 
 
 Estructura del Proyecto
 
-src/com/mycompany/gestion_estudiante/Alumno.java: Modela un alumno con RUT, nombres, apellidos, teléfono, email, estado académico, y una lista de niveles aprobados.
-src/com/mycompany/gestion_estudiante/Asignatura.java: Modela una asignatura con nombre, descripción, créditos, y profesor (opcional).
-src/com/mycompany/gestion_estudiante/Nivel.java: Modela un nivel académico con nombre, año, jornada, paralelo, capacidad máxima, estado, y listas de alumnos y asignaturas (malla).
-src/com/mycompany/gestion_estudiante/Colegio.java: Modela un colegio con nombre, dirección, teléfono, estado privado, una lista de niveles, y un mapa de alumnos por RUT.
-src/com/mycompany/gestion_estudiante/Gestion_Estudiante.java: Clase principal con la interfaz de consola y el método main.
-.gitignore: Ignora archivos generados como .class, bin/, .idea/, *.iml, out/.
+- src/com/mycompany/gestion_estudiante/Alumno.java: Modela un alumno con RUT, nombres, apellidos, teléfono, email, estado académico, y una lista de niveles aprobados.
+- src/com/mycompany/gestion_estudiante/Asignatura.java: Modela una asignatura con nombre, descripción, créditos, y profesor (opcional).
+- src/com/mycompany/gestion_estudiante/Nivel.java: Modela un nivel académico con nombre, año, jornada, paralelo, capacidad máxima, estado, y listas de alumnos y asignaturas (malla).
+- src/com/mycompany/gestion_estudiante/Colegio.java: Modela un colegio con nombre, dirección, teléfono, estado privado, una lista de niveles, y un mapa de alumnos por RUT.
+- src/com/mycompany/gestion_estudiante/Gestion_Estudiante.java: Clase principal con la interfaz de consola y el método main.
+- .gitignore: Ignora archivos generados como .class, bin/, .idea/, *.iml, out/.
 
 Descripción del Programa
+
 La aplicación gestiona estudiantes en un colegio, organizados por niveles académicos (por ejemplo, "primer año"). Sus principales características son:
 
-Carga de datos: Inicializa un colegio con datos de ejemplo usando el método demo de Colegio, que crea dos niveles, dos asignaturas, y dos alumnos.
-Gestión de alumnos: Almacena alumnos en un HashMap<String, Alumno> (por RUT) en Colegio y permite registrarlos manualmente a través de la consola.
-Gestión de niveles: Almacena niveles en una ArrayList<Nivel> en Colegio y asignaturas en una ArrayList<Asignatura> en Nivel. Los alumnos se asignan a niveles mediante una ArrayList<Alumno> en Nivel.
-Interfaz de consola: Ofrece un menú para:
-Insertar un alumno en un nivel, solicitando RUT, nombres, apellidos, teléfono, email, y estado académico.
-Listar alumnos inscritos en un nivel seleccionado.
-Listar todos los niveles del colegio.
+- Carga de datos: Inicializa un colegio con datos de ejemplo usando el método demo de Colegio, que crea dos niveles, dos asignaturas, y dos alumnos.
+- Gestión de alumnos: Almacena alumnos en un HashMap<String, Alumno> (por RUT) en Colegio y permite registrarlos manualmente a través de la consola.
+- Gestión de niveles: Almacena niveles en una ArrayList<Nivel> en Colegio y asignaturas en una ArrayList<Asignatura> en Nivel. Los alumnos se asignan a niveles mediante una ArrayList<Alumno> en Nivel.
+- Interfaz de consola: Ofrece un menú para:
+- Insertar un alumno en un nivel, solicitando RUT, nombres, apellidos, teléfono, email, y estado académico.
+- Listar alumnos inscritos en un nivel seleccionado.
+- Listar todos los niveles del colegio.
 
 
 Uso de colecciones:
