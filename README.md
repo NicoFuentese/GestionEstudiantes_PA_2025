@@ -2,10 +2,10 @@ Gestión de Estudiantes
 Aplicación en Java para gestionar estudiantes en un colegio, permitiendo registrar alumnos en niveles, listar alumnos por nivel y listar niveles. Utiliza colecciones (ArrayList y HashMap) para administrar datos y BufferedReader para leer entradas del usuario desde la consola. Incluye un método demo para inicializar datos de ejemplo.
 Requisitos
 
-Java: JDK 11 o superior
-IDE: NetBeans 12 o superior (compatible con IntelliJ IDEA o Eclipse)
-Git: Instalado para clonar el repositorio (descargar Git)
-GitHub Desktop: Para gestionar el repositorio (descargar GitHub Desktop)
+- Java: JDK 11 o superior
+- IDE: NetBeans 12 o superior (compatible con IntelliJ IDEA o Eclipse)
+- Git: Instalado para clonar el repositorio (descargar Git)
+- GitHub Desktop: Para gestionar el repositorio (descargar GitHub Desktop)
 
 Cómo obtener y configurar el proyecto
 1. Copiar el enlace del repositorio
