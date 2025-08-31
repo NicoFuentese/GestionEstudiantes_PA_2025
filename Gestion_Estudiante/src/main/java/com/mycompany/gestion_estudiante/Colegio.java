@@ -14,43 +14,120 @@ public class Colegio {
     private String nombre;
     private String direccion;
     private String telefono;
-    private LinkedList<Nivel> grados;
+    private List<Nivel> niveles;
+    private HashMap<String, Alumno> indiceAlumnos;
     private boolean privada;
     
+    //constructor
     public Colegio(String nombre, String direccion, String telefono, boolean privada)
     {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.privada = privada;
-        this.grados = new LinkedList<Nivel>();
+        this.niveles = new ArrayList<>();
+        this.indiceAlumnos = new HashMap<>();
     }
-    public Colegio(String nombre, String direccion, String telefono){this(nombre, direccion, telefono, false);}
-    public Colegio(String nombre, String direccion){this(nombre, direccion, " ");}
-    public Colegio(String nombre){this(nombre, " ", " ");}
-    public Colegio(){this(" ", " ", " ");}
     
-    public String getNombre() {return nombre;}
+    //get y setters
+    public String getNombre() {
+        return nombre;
+    }
+    
     public void setNombre(String nombre) {
-        if(nombre == " "){this.nombre = nombre;}
-        else System.out.println("Tu no puedes cambiar el nombre del colegio"); //You cannot chargue school's name
+        if(nombre == null || nombre.trim().isEmpty()) return;
+        this.nombre = nombre;
     }
 
-    public String getDireccion() {return direccion;}
+    public String getDireccion() {
+        return direccion;
+    
+    }
     public void setDireccion(String direccion) {
-        if(direccion == " "){this.direccion = direccion;}
-        else System.out.println("Tu no puedes cambiar la dirección del colegio");
+        if(direccion == null || direccion.trim().isEmpty()) return;
+        this.direccion = direccion;
     }
     
-    public String getTelefono() {return telefono;}
-    public void setTelefono(String telefono) {this.telefono = telefono;}
-
-    public boolean isPrivada() {return privada;}
-    public void setPrivada(boolean privada) {this.privada = privada;}
+    public String getTelefono() {
+        return telefono;
+    }
     
-}
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
 
-class Nivel{
+    public boolean getPrivada() {
+        return privada;
+    }
     
+    public void setPrivada(boolean privada) {
+        this.privada = privada;
+    }
+    
+    public List<Nivel> getNiveles() {
+        return niveles;
+    }
+    
+    public HashMap<String, Alumno> getIndiceAlumnos() {
+        return indiceAlumnos;
+    }
+    
+    //metodos alumnos
+    public boolean registrarAlumno(Alumno aa){
+        if(aa == null)return false;
+        indiceAlumnos.put(aa.getRut(), aa);
+        return true;
+    }
+    
+    public boolean registrarAlumno (String rut, String nombre1, 
+            String nombre2, String apellido1, String apellido2, 
+            int telefono, String email, boolean estadoAcademico) {
+        return registrarAlumno(new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, estadoAcademico));
+    }
+    
+    public Alumno buscarAlumno(String rutAlumno)
+    {
+        if(!(indiceAlumnos.containsKey(rutAlumno))) return null;
+        return indiceAlumnos.get(rutAlumno);
+    }
+    
+    //metodos niveles
+    public boolean agregarNivel (Nivel n) {
+        return niveles.add(n);
+    }
+    
+    public Nivel buscarNivel(int i) {
+        if (i >= 0 && i < niveles.size()) {
+            return niveles.get(i);
+        }
+        return null;
+    }
+    
+    //Datos iniciales
+    public static Colegio demo() {
+        Colegio col = new Colegio("Colegio Saint Dominic", 
+                "7 norte con 1 poniente",
+                "+56911223344",
+                true);
+        
+        Nivel n1 = new Nivel("primer año",2025,"diurna","A",60,true);
+        Nivel n2 = new Nivel("segundo año",2025,"dierna","B",50,true);
+        
+        n1.getMalla().add(new Asignatura("MAT101","Cálculo I",6));
+        n2.getMalla().add(new Asignatura("EST201","Estadística",6));
+        
+        col.agregarNivel(n1);
+        col.agregarNivel(n2);
+        
+        //alumnos
+        col.registrarAlumno("11.111.111-1", "Ana", "Paula", "Perez","Roncaglia", 997205530, "ana@correo.cl", true);
+        col.registrarAlumno("22.222.222-2", "Luis", "Emilio", "Ramirez","Roco", 922334455, "luis@correo.cl", true);
+        
+        //asignar nivel
+        n1.agregarAlumno(col.getIndiceAlumnos().get("11.111.111-1"));
+        n1.agregarAlumno(col.getIndiceAlumnos().get("22.222.222-2"));
+        
+        return col;
+    }
     
 }

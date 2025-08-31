@@ -119,10 +119,10 @@ public class Alumno {
     public String toString() {
         return "Alumno{" + 
                 "rut = " + rut +
-                ", nombre = " + nombre1 + nombre2 + apellido1 + apellido2 +
+                ", nombre = " + nombre1+ " " + nombre2 + " " + apellido1+ " " + apellido2 +
                 ", telefono = " + telefono +
                 ", email = " + email +
-                ", Estado =" + (estadoAcademico ? "Activo":"Inactivo");
+                ", Estado = " + (estadoAcademico ? "Activo":"Inactivo");
     }
     
     //metodo main

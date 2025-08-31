@@ -9,9 +9,12 @@ package com.mycompany.gestion_estudiante;
  * @author Nicolas
  */
 import java.util.*;
+
 public class Nivel {
-    private List<Alumno> alumnos = new ArrayList(); //posible mapa
+    //colecciones
+    private List<Alumno> alumnos = new ArrayList<>(); //posible mapa
     private List<Asignatura> malla = new ArrayList<>();
+    
     private String nombre;
     private int anio;
     private String jornada;
@@ -48,11 +51,46 @@ public class Nivel {
     public int getCantidadMaximaAlumnos() { return cantidadMaximaAlumnos; }
     public void setCantidadMaximaAlumnos(int cantidadMaximaAlumnos) { this.cantidadMaximaAlumnos = cantidadMaximaAlumnos; }
 
-    public boolean isActivo() { return activo; }
+    public boolean getActivo() { return activo; }
     public void setActivo(boolean activo) { this.activo = activo; }
     
     public List<Alumno> getAlumnos() {return alumnos;}
     public List<Asignatura> getMalla() {return malla;}
+    
+    //Agregar alumnos
+    public boolean agregarAlumno(Alumno a){
+        if (alumnos.size() >= cantidadMaximaAlumnos) return false;
+        return alumnos.add(a);
+    }
+    
+    public boolean agregarAlumno(String rut,
+            String nombre1,
+            String nombre2,
+            String apellido1,
+            String apellido2,
+            int telefono,
+            String email,
+            boolean estadoAcademico) {
+        return agregarAlumno(new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, estadoAcademico));
+    }
+    
+    //Buscar alumno
+    public Alumno buscarAlumno(String rut){
+        for (Alumno a: alumnos) {
+            if (a.getRut().equalsIgnoreCase(rut)) return a;
+        }
+        return null;
+    }
+    
+    public List<Alumno> buscarAlumnoPorNombre (String fragmento) {
+        List<Alumno> res = new ArrayList<>();
+        
+        for (Alumno a: alumnos) {
+            String nombreCompleto = (a.getNombre1() + " " + a.getApellido1()).toLowerCase();
+            if (nombreCompleto.contains(fragmento.toLowerCase())) res.add(a);
+        }
+        return res;
+    }
 
     @Override
     public String toString() {
