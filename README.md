@@ -10,28 +10,28 @@ Requisitos
 Cómo obtener y configurar el proyecto
 1. Copiar el enlace del repositorio
 
-Ve al repositorio en GitHub: [URL-del-repositorio] (reemplaza con el enlace real, por ejemplo, https://github.com/tu-usuario/GestionEstudiantes).
-Haz clic en el botón verde Code en la página del repositorio.
-Copia la URL bajo HTTPS (por ejemplo, https://github.com/tu-usuario/GestionEstudiantes.git).
+- Ve al repositorio en GitHub: [URL-del-repositorio] (reemplaza con el enlace real, por ejemplo, https://github.com/tu-usuario/GestionEstudiantes).
+- Haz clic en el botón verde Code en la página del repositorio.
+- Copia la URL bajo HTTPS (por ejemplo, https://github.com/tu-usuario/GestionEstudiantes.git).
 
 2. Configurar en GitHub Desktop
 
-Abre GitHub Desktop.
-Ve a File > Clone Repository.
-En la pestaña URL, pega el enlace copiado del repositorio.
-Selecciona un directorio local para guardar el proyecto (por ejemplo, C:\Proyectos\GestionEstudiantes).
-Haz clic en Clone para descargar el repositorio.
-Una vez clonado, el proyecto aparecerá en GitHub Desktop. Puedes abrir los archivos desde el directorio local.
+- Abre GitHub Desktop.
+- Ve a File > Clone Repository.
+- En la pestaña URL, pega el enlace copiado del repositorio.
+- Selecciona un directorio local para guardar el proyecto (por ejemplo, C:\Proyectos\GestionEstudiantes).
+- Haz clic en Clone para descargar el repositorio.
+- Una vez clonado, el proyecto aparecerá en GitHub Desktop. Puedes abrir los archivos desde el directorio local.
 
 3. Configurar y ejecutar en NetBeans
 
-Abre NetBeans.
-Ve a File > Open Project.
-Navega al directorio donde clonaste el repositorio (por ejemplo, C:\Proyectos\GestionEstudiantes) y selecciona la carpeta del proyecto.
-NetBeans detectará automáticamente el proyecto Java si tiene la estructura correcta (src/com/mycompany/gestion_estudiante). Si no, crea un nuevo proyecto:
-File > New Project > Java > Java Application.
-Selecciona el directorio del repositorio como ubicación del proyecto.
-Asegúrate de que los archivos .java estén en src/com/mycompany/gestion_estudiante.
+- Abre NetBeans.
+- Ve a File > Open Project.
+- Navega al directorio donde clonaste el repositorio (por ejemplo, C:\Proyectos\GestionEstudiantes) y selecciona la carpeta del proyecto.
+- NetBeans detectará automáticamente el proyecto Java si tiene la estructura correcta (src/com/mycompany/gestion_estudiante). Si no, crea un nuevo proyecto:
+- File > New Project > Java > Java Application.
+- Selecciona el directorio del repositorio como ubicación del proyecto.
+- Asegúrate de que los archivos .java estén en src/com/mycompany/gestion_estudiante.
 
 
 Haz clic derecho en Gestion_Estudiante.java en el explorador de proyectos y selecciona Run File para ejecutar la aplicación.
