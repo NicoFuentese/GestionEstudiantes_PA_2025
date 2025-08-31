@@ -11,9 +11,9 @@ Requisitos
 Cómo obtener y configurar el proyecto
 1. Copiar el enlace del repositorio
 
-- Ve al repositorio en GitHub: [URL-del-repositorio] (reemplaza con el enlace real, por ejemplo, https://github.com/tu-usuario/GestionEstudiantes).
+- Ve al repositorio en GitHub: https://github.com/NicoFuentese/GestionEstudiantes_PA_2025.git
 - Haz clic en el botón verde Code en la página del repositorio.
-- Copia la URL bajo HTTPS (por ejemplo, https://github.com/tu-usuario/GestionEstudiantes.git).
+- Copia la URL bajo HTTPS .
 
 2. Configurar en GitHub Desktop
 
