@@ -60,11 +60,13 @@ La aplicación gestiona estudiantes en un colegio, organizados por niveles acad�
 
 
 Uso de colecciones:
-ArrayList en Alumno (aprobados), Nivel (alumnos, malla), y Colegio (niveles).
-HashMap en Colegio (indiceAlumnos) para mapear RUTs a alumnos.
+
+- ArrayList en Alumno (aprobados), Nivel (alumnos, malla), y Colegio (niveles).
+- HashMap en Colegio (indiceAlumnos) para mapear RUTs a alumnos.
 
 
 Uso de BufferedReader: Lee entradas del usuario desde la consola para el menú y los datos de alumnos, con validación para entradas numéricas.
+
 Robustez: Incluye validaciones para entradas vacías (en Colegio.setNombre y setDireccion), capacidad máxima de alumnos en un nivel, y manejo de excepciones para entradas numéricas inválidas.
 
 Ejemplo de Uso
@@ -72,21 +74,24 @@ Ejemplo de Uso
 Al ejecutar Gestion_Estudiante.java, se carga el colegio con datos de ejemplo (método demo de Colegio).
 En el menú, selecciona una opción:
 1: Inserta un alumno en un nivel. Por ejemplo:Seleccione indice de nivel: 0
-Rut: 33.333.333-3
-Nombre 1: Carla
-Nombre 2: Sofia
-Apellido 1: Lopez
-Apellido 2: Gomez
-Telefono: 912345678
-Email: carla.lopez@correo.cl
-Estado Academico: true
-Alumno agregado al nivel
+
+- Rut: 33.333.333-3
+- Nombre 1: Carla
+- Nombre 2: Sofia
+- Apellido 1: Lopez
+- Apellido 2: Gomez
+- Telefono: 912345678
+- Email: carla.lopez@correo.cl
+- Estado Academico: true
+- Alumno agregado al nivel
 
 
 2: Lista alumnos en un nivel. Por ejemplo:Seleccion indice de nivel: 0
+
 Alumnos en Nivel{nombre='primer año', anio=2025, jornada='diurna', paralelo='A', cantidadMaximaAlumnos=60, activo=Sí}:
- - Alumno{rut = 11.111.111-1, nombre = Ana Paula Perez Roncaglia, telefono = 997205530, email = ana@correo.cl, Estado = Activo}
- - Alumno{rut = 22.222.222-2, nombre = Luis Emilio Ramirez Roco, telefono = 922334455, email = luis@correo.cl, Estado = Activo}
+
+- Alumno{rut = 11.111.111-1, nombre = Ana Paula Perez Roncaglia, telefono = 997205530, email = ana@correo.cl, Estado = Activo}
+- Alumno{rut = 22.222.222-2, nombre = Luis Emilio Ramirez Roco, telefono = 922334455, email = luis@correo.cl, Estado = Activo}
 
 
 3: Lista niveles. Por ejemplo:Niveles del colegio:
@@ -106,5 +111,6 @@ Validaciones: El programa valida entradas numéricas y nombres/direcciones no va
 Si encuentras errores al ejecutar, verifica que la versión de Java sea compatible y que los archivos .java estén en el directorio correcto (src/com/mycompany/gestion_estudiante).
 
 Contribuciones
+
 Este proyecto fue desarrollado como parte de una actividad de Programación Avanzada, por parte de los Alumnos Nicolas Fuentes, Victor Guilarte y Eduardo Sandoval.
 Si deseas contribuir, crea un fork del repositorio, realiza tus cambios y envía un pull request.
