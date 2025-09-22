@@ -58,6 +58,8 @@ public class Nivel {
     public List<Alumno> getAlumnos() {return alumnos;}
     public List<Asignatura> getMalla() {return malla;}
     
+    public List<Inscripcion> getInscripciones(){return inscripciones;}
+    
     //Agregar alumnos
     public boolean agregarAlumno(Alumno a){
         if (alumnos.size() >= cantidadMaximaAlumnos) return false;
@@ -92,6 +94,10 @@ public class Nivel {
         }
         return res;
     }
+    
+    //agregar inscripciones
+    public void agregarInscripcion(Inscripcion i){inscripciones.add(i);}
+    public boolean eliminarInscripcion(Inscripcion i){return inscripciones.remove(i);}
 
     @Override
     public String toString() {
