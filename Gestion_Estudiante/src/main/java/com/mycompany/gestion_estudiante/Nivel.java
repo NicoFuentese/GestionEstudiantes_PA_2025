@@ -119,6 +119,25 @@ public class Nivel {
         inscripciones.add(i);
     }
     
+    public void agregarInscripcion (Alumno alumno, Asignatura asig, String periodo,
+            String estado, double nota) 
+            throws InscripcionInvalidaException, InscripcionDuplicadaException {
+        Inscripcion i = new Inscripcion();
+        i.setAlumno(alumno);
+        i.setAsignatura(asig);
+        i.setPeriodo(periodo);
+        i.setEstado(estado);
+        i.setNotaFinal(nota);
+        agregarInscripcion(i);
+    }
+    
+    public void agregarInscripcion (Alumno alumno, Asignatura asig, String periodo)
+            throws InscripcionInvalidaException, InscripcionDuplicadaException {
+        agregarInscripcion(alumno, asig, periodo, "INSCRITO", 0.0);
+    }
+    
+    
+    
     public boolean eliminarInscripcion(Inscripcion i){return inscripciones.remove(i);} 
 
     @Override
