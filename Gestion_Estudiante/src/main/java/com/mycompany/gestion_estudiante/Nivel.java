@@ -21,6 +21,7 @@ public class Nivel {
     private String paralelo;
     private int cantidadMaximaAlumnos;
     private boolean activo;
+    private List<Inscripcion> insripciones = new ArrayList<>();
 
     // Constructores
     public Nivel() {}
