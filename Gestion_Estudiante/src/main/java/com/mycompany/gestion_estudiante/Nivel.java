@@ -96,8 +96,30 @@ public class Nivel {
     }
     
     //agregar inscripciones
-    public void agregarInscripcion(Inscripcion i){inscripciones.add(i);}
-    public boolean eliminarInscripcion(Inscripcion i){return inscripciones.remove(i);}
+    public void agregarInscripcion (Inscripcion i) 
+            throws InscripcionInvalidaException, InscripcionDuplicadaException{
+        if (i == null) throw new InscripcionInvalidaException("Inscripcion null");
+        if (i.getAlumno() == null) throw new InscripcionInvalidaException("Alumno null");
+        if(i.getAsignatura() == null) throw new InscripcionInvalidaException("Asignatura null");
+        if(i.getPeriodo() == null) throw new InscripcionInvalidaException("Periodo null");
+        if (i.getNotaFinal() < 1.0 || i.getNotaFinal() > 7.0)
+            throw new InscripcionInvalidaException("Nota fuera de rango (1 - 7");
+        
+        //duplicados
+        String rut = i.getAlumno().getRut();
+        String asigId = i.getAsignatura().getNombre();
+        String periodo = i.getPeriodo();
+        
+        boolean dup = inscripciones.stream().anyMatch(x ->
+                x.getAlumno().getRut().equals(rut) &&
+                x.getAsignatura().getNombre().equals(asigId) &&
+                x.getPeriodo().equals(periodo)
+        );
+        if (dup) throw new InscripcionDuplicadaException(rut, asigId, periodo);
+        inscripciones.add(i);
+    }
+    
+    public boolean eliminarInscripcion(Inscripcion i){return inscripciones.remove(i);} 
 
     @Override
     public String toString() {
