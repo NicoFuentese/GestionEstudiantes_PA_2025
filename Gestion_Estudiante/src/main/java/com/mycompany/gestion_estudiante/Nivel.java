@@ -71,7 +71,7 @@ public class Nivel {
             String nombre2,
             String apellido1,
             String apellido2,
-            int telefono,
+            String telefono,
             String email,
             boolean estadoAcademico) {
         return agregarAlumno(new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, estadoAcademico));

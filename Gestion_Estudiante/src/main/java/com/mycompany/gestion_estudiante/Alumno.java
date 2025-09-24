@@ -17,7 +17,7 @@ public class Alumno {
     private String nombre2;
     private String apellido1;
     private String apellido2;
-    private int telefono;
+    private String telefono;
     private String email;
     private boolean estadoAcademico; //true o false si esta activo
     
@@ -30,7 +30,7 @@ public class Alumno {
             String nombre2,
             String apellido1,
             String apellido2,
-            int telefono,
+            String telefono,
             String email,
             boolean estadoAcademico){
         this.rut = rut;
@@ -89,11 +89,11 @@ public class Alumno {
     }
     
     //get y setter telefono
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
     
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
     
