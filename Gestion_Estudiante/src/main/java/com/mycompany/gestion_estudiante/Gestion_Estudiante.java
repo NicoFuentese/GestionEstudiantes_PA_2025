@@ -41,16 +41,16 @@ public class Gestion_Estudiante {
                     gestor.mostrarAlumnos();
                     break;
                 case "Alumnos con riesgo academico":
-                    //gestor.mostrarEmpleados();
+                    gestor.mostrarAlumnosPeligro();
                     break;
                 case "Modificar alumno":
-                    //gestor.modificarEmpleado();
+                    gestor.modificarAlumno();
                     break;
                 case "agregar nota alumno":
-                    //gestor.eliminarEmpleado();
+                    gestor.agregarNotaAlumno();
                     break;
                 case "Eliminar alumno":
-                    //gestor.eliminarEmpleado();
+                    gestor.eliminarAlumno();
                     break;
                 default:
                     break;

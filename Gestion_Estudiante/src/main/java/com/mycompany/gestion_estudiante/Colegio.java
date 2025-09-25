@@ -74,16 +74,19 @@ public class Colegio {
     }
     
     //metodos alumnos
-    public boolean registrarAlumno(Alumno aa){
+    public boolean registrarAlumno(Alumno aa, String nivel){
         if(aa == null)return false;
         indiceAlumnos.put(aa.getRut(), aa);
+        
+        for(Nivel e : niveles){if(e.getNombre().equals(nivel)){e.agregarAlumno(aa);}}
         return true;
     }
     
     public boolean registrarAlumno (String rut, String nombre1, 
             String nombre2, String apellido1, String apellido2, 
-            String telefono, String email, boolean estadoAcademico) {
-        return registrarAlumno(new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, estadoAcademico));
+            String telefono, String email, boolean estadoAcademico,
+            String nivel) {
+        return registrarAlumno(new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, nivel, estadoAcademico), nivel);
     }
     
     public Alumno buscarAlumno(String rutAlumno)
@@ -97,10 +100,8 @@ public class Colegio {
         return niveles.add(n);
     }
     
-    public Nivel buscarNivel(int i) {
-        if (i >= 0 && i < niveles.size()) {
-            return niveles.get(i);
-        }
+    public Nivel buscarNivel(String a) {
+        for(Nivel n : niveles) if(n.getNombre() == a) return n;
         return null;
     }
     //Datos iniciales
@@ -109,28 +110,40 @@ public class Colegio {
         ArrayList<Nivel> niveles = new ArrayList<>();
         
         Nivel n1 = new Nivel("primero basico",2025,"diurna","A",60,true);
+        n1.getMalla().add(new Asignatura("matematicas"));
         niveles.add(n1);
         Nivel n2 = new Nivel("segundo basico",2025,"diurna","A",50,true);
+        n2.getMalla().add(new Asignatura("matematicas"));
         niveles.add(n2);
         Nivel n3 = new Nivel("tercero basico",2025,"diurna","A",50,true);
+        n3.getMalla().add(new Asignatura("matematicas"));
         niveles.add(n3);
         Nivel n4 = new Nivel("cuarto basico",2025,"diurna","A",50,true);
+        n4.getMalla().add(new Asignatura("matematicas"));
         niveles.add(n4);
         Nivel n5 = new Nivel("quinto basico",2025,"diurna","A",50,true);
+        n5.getMalla().add(new Asignatura("matematicas"));
         niveles.add(n5);
         Nivel n6 = new Nivel("sexto basico",2025,"diurna","A",50,true);
+        n6.getMalla().add(new Asignatura("matematicas"));
         niveles.add(n6);
         Nivel n7 = new Nivel("septimo basico",2025,"diurna","A",50,true);
+        n7.getMalla().add(new Asignatura("matematicas"));
         niveles.add(n7);
         Nivel n8 = new Nivel("octavo basico",2025,"diurna","A",50,true);
+        n8.getMalla().add(new Asignatura("matematicas"));
         niveles.add(n8);
         Nivel n9 = new Nivel("primero medio",2025,"diurna","A",50,true);
+        n9.getMalla().add(new Asignatura("matematicas"));
         niveles.add(n9);
         Nivel n10 = new Nivel("segundo medio",2025,"diurna","A",50,true);
+        n10.getMalla().add(new Asignatura("matematicas"));
         niveles.add(n10);
         Nivel n11 = new Nivel("tercero medio",2025,"diurna","A",50,true);
+        n11.getMalla().add(new Asignatura("matematicas"));
         niveles.add(n11);
         Nivel n12 = new Nivel("cuarto medio",2025,"diurna","A",50,true);
+        n12.getMalla().add(new Asignatura("matematicas"));
         niveles.add(n12);
         
         
