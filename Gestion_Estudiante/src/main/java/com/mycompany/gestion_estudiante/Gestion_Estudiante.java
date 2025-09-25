@@ -35,7 +35,31 @@ public class Gestion_Estudiante {
 
             switch (opcion) {
                 case "Agregar alumno":
-                    gestor.agregarAlumno();
+                    try
+                    {
+                        gestor.agregarAlumno();
+                    }
+                    catch(AlumnoDuplicadoException e){
+                        JOptionPane.showMessageDialog(
+                        null, 
+                        e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    }
+                    catch(TelefonoInvalidoException e){
+                        JOptionPane.showMessageDialog(
+                        null, 
+                        e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    }
+                    catch(EmailInvalidoException e){
+                        JOptionPane.showMessageDialog(
+                        null, 
+                        e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    }
                     break;
                 case "Mostrar lista alumno":
                     gestor.mostrarAlumnos();

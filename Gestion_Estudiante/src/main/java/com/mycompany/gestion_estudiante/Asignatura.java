@@ -20,7 +20,7 @@ public class Asignatura{
 public Asignatura(){}
 public Asignatura(String nombre, String descripcion,int creditos, String profesor){
     
-    this.nombre = nombre;
+    this.nombre = nombre.toLowerCase();
     this.descripcion = descripcion;
     this.creditos = creditos;
     this.profesor = profesor;
@@ -28,25 +28,25 @@ public Asignatura(String nombre, String descripcion,int creditos, String profeso
 
 public Asignatura(String nombre, String descripcion, int creditos){
     
-    this.nombre = nombre;
+    this.nombre = nombre.toLowerCase();
     this.descripcion = descripcion;
     this.creditos = creditos;
 }
 
 public Asignatura(String nombre, String descripcion,String profesor , int creditos){
     
-    this.nombre = nombre;
+    this.nombre = nombre.toLowerCase();
     this.descripcion = descripcion;
     this.profesor = profesor;
     this.creditos = creditos;
 }
 
 public Asignatura(String nombre){
-    this.nombre = nombre;
+    this.nombre = nombre.toLowerCase();
 }
 
 public String getNombre(){return nombre; }
-public void setNombre(String nombre){ this.nombre =  nombre; }
+public void setNombre(String nombre){ this.nombre =  nombre.toLowerCase(); }
 
 public String getDescripcion(){ return descripcion;}
 public void setDescripcion(String descripcion) {this.descripcion = descripcion;}

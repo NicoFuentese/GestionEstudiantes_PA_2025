@@ -22,25 +22,7 @@ public class GestionEstudiante {
         colegioGestor = c;
     }
 
-    public void agregarAlumno() {
-        
-        String nombre1 = JOptionPane.showInputDialog("Ingrese primer Nombre:");
-        if (nombre1 == null || nombre1.isEmpty()) return;
-        String nombre2 = JOptionPane.showInputDialog("Ingrese Segundo Nombre:");
-        if (nombre2 == null || nombre2.isEmpty()) return;
-        String apellido1 = JOptionPane.showInputDialog("Ingrese Primer Apellido:");
-        if (apellido1 == null || apellido1.isEmpty()) return;
-        String apellido2 = JOptionPane.showInputDialog("Ingrese Segundo Apellido:");
-        if (apellido2 == null || apellido2.isEmpty()) return;
-        String telefono = JOptionPane.showInputDialog("Ingrese telefono:");
-        if (telefono == null || telefono.isEmpty()) return;
-        String email = JOptionPane.showInputDialog("Ingrese email:");
-        if (email == null || email.isEmpty()) return;
-        
-        String rut = JOptionPane.showInputDialog("Ingrese rut:");
-        if (rut == null || rut.isEmpty()) return;
-        
-        
+    public void agregarAlumno() throws AlumnoDuplicadoException, TelefonoInvalidoException, EmailInvalidoException{
         
         String[] opciones = {"primero basico","segundo basico", 
             "tercero basico", "cuarto basico", 
@@ -59,7 +41,37 @@ public class GestionEstudiante {
                     opciones[0]
         );
 
-        if (opcion == null || opcion.equals("Salir")) return;
+        if (opcion == null) return;
+        
+        
+        String rut = JOptionPane.showInputDialog("Ingrese rut:");
+        if (rut == null || rut.isEmpty()) return;
+        
+        String nombre1 = JOptionPane.showInputDialog("Ingrese primer Nombre:");
+        if (nombre1 == null || nombre1.isEmpty()) return;
+        String nombre2 = JOptionPane.showInputDialog("Ingrese Segundo Nombre:");
+        if (nombre2 == null || nombre2.isEmpty()) return;
+        String apellido1 = JOptionPane.showInputDialog("Ingrese Primer Apellido:");
+        if (apellido1 == null || apellido1.isEmpty()) return;
+        String apellido2 = JOptionPane.showInputDialog("Ingrese Segundo Apellido:");
+        if (apellido2 == null || apellido2.isEmpty()) return;
+        
+        
+        String telefono = JOptionPane.showInputDialog("Ingrese telefono (no agrege sufijo):");
+        try{
+            int numVacio = Integer.parseInt(telefono);
+        }
+        catch(NumberFormatException e)
+        {
+            throw new TelefonoInvalidoException();
+        }
+        if (telefono == null || telefono.isEmpty()) return;
+        
+        
+        String email = JOptionPane.showInputDialog("Ingrese email:");
+        if(!email.contains("@") && !email.contains(".")) throw new EmailInvalidoException();
+        if (email == null || email.isEmpty()) return;
+        
         Alumno n = new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, opcion, true);
  
         colegioGestor.registrarAlumno(n, opcion); 

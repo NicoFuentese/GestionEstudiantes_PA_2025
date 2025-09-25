@@ -74,18 +74,19 @@ public class Colegio {
     }
     
     //metodos alumnos
-    public boolean registrarAlumno(Alumno aa, String nivel){
+    public boolean registrarAlumno(Alumno aa, String nivel) throws AlumnoDuplicadoException {
         if(aa == null)return false;
-        indiceAlumnos.put(aa.getRut(), aa);
+        if(indiceAlumnos.containsKey(aa.getRut())) {throw new AlumnoDuplicadoException();}
+        indiceAlumnos.put(aa.getRut(), aa); 
         
         for(Nivel e : niveles){if(e.getNombre().equals(nivel)){e.agregarAlumno(aa);}}
         return true;
     }
-    
+     
     public boolean registrarAlumno (String rut, String nombre1, 
             String nombre2, String apellido1, String apellido2, 
             String telefono, String email, boolean estadoAcademico,
-            String nivel) {
+            String nivel)  throws AlumnoDuplicadoException {
         return registrarAlumno(new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, nivel, estadoAcademico), nivel);
     }
     
