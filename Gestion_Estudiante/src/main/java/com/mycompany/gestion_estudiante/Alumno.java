@@ -12,13 +12,16 @@ import java.util.*;
 
 public class Alumno {
     private List<Nivel> aprobados = new ArrayList<>();
+    private HashMap<Asignatura, ArrayList<Double>> notas = new HashMap<>();
     private String rut;
     private String nombre1;
     private String nombre2;
     private String apellido1;
     private String apellido2;
-    private int telefono;
+    private String telefono;
     private String email;
+    private String nombreNivel;
+    private double promedioGeneral;
     private boolean estadoAcademico; //true o false si esta activo
     
     //contructores
@@ -30,8 +33,9 @@ public class Alumno {
             String nombre2,
             String apellido1,
             String apellido2,
-            int telefono,
+            String telefono,
             String email,
+            String nombreNivel,
             boolean estadoAcademico){
         this.rut = rut;
         this.nombre1 = nombre1;
@@ -41,6 +45,8 @@ public class Alumno {
         this.telefono = telefono;
         this.email = email;
         this.estadoAcademico = estadoAcademico;
+        this.nombreNivel = nombreNivel;
+        this.promedioGeneral = 0;
     }
     
     //get y setter rut
@@ -89,11 +95,11 @@ public class Alumno {
     }
     
     //get y setter telefono
-    public int getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
     
-    public void setTelefono(int telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
     
@@ -113,6 +119,60 @@ public class Alumno {
     
     public void setEstadoAcademico(boolean estadoAcademico) {
         this.estadoAcademico = estadoAcademico;
+    }
+    
+    public boolean agregarAsignaturas(ArrayList<Asignatura> aamm){
+        if(aamm.isEmpty()) return false;
+        
+        for(Asignatura a : aamm)
+        {
+            ArrayList <Double> nn = new ArrayList<>();
+            notas.put(a, nn);
+        }
+        return true;
+    }
+    
+    public boolean agregarNota(Asignatura a, double n){
+        if(!notas.containsKey(a)) {return false;}
+        if(a == null) {return false;}
+        
+        
+        (notas.get(a)).add(n);
+        
+        this.calcularPromedioGeneral(); 
+        return true;
+    }
+    //necesita set¿
+    public boolean calcularPromedioGeneral(){
+        if(notas.isEmpty()) return false;
+        int countA = 0;
+        double sumA = 0.0;
+        for(ArrayList <Double> n : notas.values())
+        {
+            if(n.isEmpty()) continue;
+            int count = 0;
+            Double sum = 0.0;
+            for(Double num : n) {
+                sum += num;
+                count++;
+            }
+            sumA += (sum / count);
+            countA++;
+        }
+        
+        promedioGeneral = (sumA / countA);
+        return true;
+    }
+    
+    public double getPromedioGeneral()
+    {
+        calcularPromedioGeneral();
+        if(promedioGeneral < 1.0) return 1.0;
+        return promedioGeneral;
+    }
+    
+    public String getNombreNivel(){
+        return nombreNivel;
     }
     
     @Override

@@ -13,7 +13,7 @@ import java.util.*;
 public class Nivel {
     //colecciones
     private List<Alumno> alumnos = new ArrayList<>(); //posible mapa
-    private List<Asignatura> malla = new ArrayList<>();
+    private ArrayList<Asignatura> malla = new ArrayList<>();
     
     private String nombre;
     private int anio;
@@ -62,8 +62,20 @@ public class Nivel {
     
     //Agregar alumnos
     public boolean agregarAlumno(Alumno a){
-        if (alumnos.size() >= cantidadMaximaAlumnos) return false;
+        if (alumnos.size() >= cantidadMaximaAlumnos) return false; // exepcion
+        a.agregarAsignaturas(malla);
         return alumnos.add(a);
+    }
+    
+    public boolean agregarNotaAlumno(String rut, String nA, double n){
+       
+        for(Asignatura i : malla) {
+            if(nA.equals(i.getNombre())){
+                if(buscarAlumno(rut) != null && (buscarAlumno(rut)).agregarNota(i, n)) return true;
+                else return false;
+            }
+        }
+        return false;
     }
     
     public boolean agregarAlumno(String rut,
@@ -71,16 +83,17 @@ public class Nivel {
             String nombre2,
             String apellido1,
             String apellido2,
-            int telefono,
+            String telefono,
             String email,
+            String nombreNivel,
             boolean estadoAcademico) {
-        return agregarAlumno(new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, estadoAcademico));
+        return agregarAlumno(new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, nombreNivel, estadoAcademico));
     }
     
     //Buscar alumno
     public Alumno buscarAlumno(String rut){
         for (Alumno a: alumnos) {
-            if (a.getRut().equalsIgnoreCase(rut)) return a;
+            if (a.getRut().equals(rut)) return a;
         }
         return null;
     }
