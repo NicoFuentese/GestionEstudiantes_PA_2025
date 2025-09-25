@@ -156,7 +156,7 @@ public class Alumno {
                 sum += num;
                 count++;
             }
-            sumA = (sum / count);
+            sumA += (sum / count);
             countA++;
         }
         

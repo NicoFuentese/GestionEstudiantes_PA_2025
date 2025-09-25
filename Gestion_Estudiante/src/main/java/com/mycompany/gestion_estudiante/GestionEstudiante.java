@@ -110,7 +110,7 @@ public class GestionEstudiante {
         if(nNota < 1.0 || nNota > 7.0) return;
         
         String nN = (colegioGestor.getIndiceAlumnos()).get(rut).getNombreNivel();
-        colegioGestor.buscarNivel(nN).agregarNotaAlumno(rut, nN, nNota);
+        colegioGestor.buscarNivel(nN).agregarNotaAlumno(rut, a, nNota);
     }
     public void mostrarAlumnosPeligro() {
         if ((colegioGestor.getIndiceAlumnos()).isEmpty()) {
