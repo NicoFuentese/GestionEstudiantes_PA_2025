@@ -382,4 +382,8 @@ public class GestionEstudiante {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Inscripción", JOptionPane.WARNING_MESSAGE);
         }
     }
+    
+    public void generarReporteTxt() {
+        
+    }
 }
