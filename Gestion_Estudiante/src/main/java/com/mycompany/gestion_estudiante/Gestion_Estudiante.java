@@ -16,7 +16,17 @@ import javax.swing.table.DefaultTableModel;
 public class Gestion_Estudiante {
     public static void main(String [] args)
     {
-        Colegio cole = new Colegio(" ", " ", " ", false);
+        System.out.println("Working Dir = " + new java.io.File("").getAbsolutePath());
+        
+        Colegio cole = DataStore.cargarTodo();
+        //if (cole.getNiveles().isEmpty()) { cole = Colegio.demo(); }
+        
+        Colegio finalCole = cole; // para usar dentro del hook
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            DataStore.guardarTodo(finalCole);
+            System.out.println("[DataStore] Datos guardados en carpeta 'data/'.");
+        }));
+
         GestionEstudiante gestor = new GestionEstudiante(cole);
         
         while (true) {

@@ -1,4 +1,6 @@
-rut;nombre1;nombre2;apellido1;apellido2
-12345678-9;Ana;paula;Silva;Jara
-15678923-5;Luis;emilio;Torres;Maila
-20456789-K;Maria;eugenia;Ramirez;Crovetto
+rut;nombre1;nombre2;apellido1;apellido2;telefono;email
+11;dd;ss;ee;rr;44;dd@mail.com
+123;aa;ss;dd;ff;44444;gg@mail.com
+333;ddd;sss;eee;rrr;555;fdd@mail.com
+444;dddd;ssss;eeee;rrrr;6666;gff@mail.com
+5555;hhh;jjj;kkk;lll;8888;g@mail.com

@@ -37,8 +37,8 @@ public class DataStore {
         Colegio c = new Colegio("Colegio Sin Nombre", "-", "-", true);
         
         cargarNiveles(c);
-        cargarAlumnos();      // llena IDX_ALUMNO (no toca Colegio aún)
-        cargarAsignaturas(c); // llena malla de cada nivel
+        cargarAlumnos(c);
+        cargarAsignaturas(c);
         cargarInscripciones(c);
 
         System.out.println("[DataStore] Cargado desde: " + BASE.toAbsolutePath());
@@ -60,6 +60,8 @@ public class DataStore {
     private static void cargarNiveles(Colegio c) {
         Path p = BASE.resolve("niveles.csv");
         if (!Files.exists(p)) return;
+        
+        c.getNiveles().clear();
 
         try (BufferedReader br = Files.newBufferedReader(p, UTF_8)) {
             String line; boolean first = true;
@@ -76,21 +78,14 @@ public class DataStore {
                 int capacidad   = parseInt(safe(t,5), 9999);
                 boolean activo  = parseBool(safe(t,6), true);
 
-                Nivel n = new Nivel();
-                n.setNombre(nombre);
-                n.setAnio(anio);
-                n.setJornada(jornada);
-                n.setParalelo(paralelo);
-                n.setCantidadMaximaAlumnos(capacidad);
-                try { n.setActivo(activo); } catch (Throwable ignored) {}
-
+                Nivel n = new Nivel(nombre, anio, jornada, paralelo, capacidad, activo);
                 c.getNiveles().add(n);
                 IDX_NIVEL.put(!key.isBlank() ? key : nivelKey(n), n);
             }
         } catch (IOException e) { e.printStackTrace(); }
     }
 
-    private static void cargarAlumnos() {
+    private static void cargarAlumnos(Colegio c) {
         Path p = BASE.resolve("alumnos.csv");
         if (!Files.exists(p)) return;
 
@@ -104,24 +99,27 @@ public class DataStore {
                 String rut  = safe(t,0);
                 if (rut.isBlank()) continue;
 
-                // Retrocompatibilidad:
-                // - 5+ columnas: rut;nombre1;nombre2;apellido1;apellido2
-                // - 2  columnas: rut;nombre  (se carga en nombre1)
-                String nombre1   = t.length > 1 ? safe(t,1) : "";
-                String nombre2   = t.length > 2 ? safe(t,2) : "";
-                String apellido1 = t.length > 3 ? safe(t,3) : "";
-                String apellido2 = t.length > 4 ? safe(t,4) : "";
+                String nombre1   = t.length > 1 ? safe(t, 1) : "";
+                String nombre2   = t.length > 2 ? safe(t, 2) : "";
+                String apellido1 = t.length > 3 ? safe(t, 3) : "";
+                String apellido2 = t.length > 4 ? safe(t, 4) : "";
+                String telefono  = t.length > 5 ? safe(t, 5) : "";
+                String email     = t.length > 6 ? safe(t, 6) : "";
 
-                // Si vino el formato antiguo (2 col) y la col2 era "nombre completo",
-                // lo guardamos como nombre1 sin dividir.
                 Alumno a = new Alumno();
                 a.setRut(rut);
-                if (!nombre1.isBlank()) a.setNombre1(nombre1);
-                if (!nombre2.isBlank()) a.setNombre2(nombre2);
-                if (!apellido1.isBlank()) a.setApellido1(apellido1);
-                if (!apellido2.isBlank()) a.setApellido2(apellido2);
-
-                IDX_ALUMNO.put(rut, a);
+                a.setNombre1(nombre1);
+                a.setNombre2(nombre2);
+                a.setApellido1(apellido1);
+                a.setApellido2(apellido2);
+                a.setTelefono(telefono);
+                a.setEmail(email);
+                
+                if (!c.getIndiceAlumnos().containsKey(rut)) {
+                    c.getIndiceAlumnos().put(rut, a);
+                } else {
+                    System.err.println("[WARN] Alumno duplicado en CSV: " + rut);
+                }
             }
         } catch (IOException e) { e.printStackTrace(); }
     }
@@ -237,9 +235,25 @@ public class DataStore {
     private static void guardarAlumnos(Colegio c) {
         Path p = BASE.resolve("alumnos.csv");
         try (BufferedWriter bw = Files.newBufferedWriter(p, UTF_8)) {
-            bw.write("rut;nombre1;nombre2;apellido1;apellido2\n");
+            bw.write("rut;nombre1;nombre2;apellido1;apellido2;telefono;email\n");
             Set<String> vistos = new HashSet<>();
-            // Extraemos desde niveles para asegurar que no falte ninguno
+            
+            for (Alumno a : c.getIndiceAlumnos().values()) {
+                if (vistos.add(a.getRut())) {
+                    bw.write(String.join(SEP,
+                        nn(a.getRut()),
+                        nn(a.getNombre1()),
+                        nn(a.getNombre2()),
+                        nn(a.getApellido1()),
+                        nn(a.getApellido2()),
+                        nn(a.getTelefono()),
+                        nn(a.getEmail())
+                    ));
+                    bw.write("\n");
+                }
+            }
+            
+            //respaldo solo en Niveles
             for (Nivel n : c.getNiveles()) {
                 for (Alumno a : n.getAlumnos()) {
                     if (vistos.add(a.getRut())) {
@@ -248,7 +262,9 @@ public class DataStore {
                             nn(a.getNombre1()),
                             nn(a.getNombre2()),
                             nn(a.getApellido1()),
-                            nn(a.getApellido2())
+                            nn(a.getApellido2()),
+                            nn(a.getTelefono()),
+                            nn(a.getEmail())
                         ));
                         bw.write("\n");
                     }
