@@ -147,7 +147,7 @@ public class GestionEstudiante {
             return;
         }
 
-        // Nive
+        // Nivel
         String nombreNivel = alumno.getNombreNivel();
         Nivel nivel = (nombreNivel == null) ? null : colegioGestor.buscarNivel(nombreNivel);
         if (nivel == null) {
@@ -344,7 +344,6 @@ public class GestionEstudiante {
 
         //Encontrar el nivel x nombre que guarda alumno
         Nivel nivel = (a.getNombreNivel() == null) ? null : colegioGestor.buscarNivel(a.getNombreNivel());
-        // public Nivel buscarNivel(String x){ for(Nivel n:niveles) if (n.getNombre().equals(x)) return n; return null; }
 
         //cualquier nivel que contenga la asignatura
         if (nivel == null) {
@@ -357,12 +356,12 @@ public class GestionEstudiante {
         }
         if (nivel == null) { JOptionPane.showMessageDialog(null, "No se encontró un nivel con esa asignatura."); return; }
 
-        //Asegura que el alumno esté en la lista del nivel (si no, agregar)
+        //Asegura que el alumno este en la lista del nivel
         if (!nivel.getAlumnos().contains(a)) {
             nivel.agregarAlumno(a);
         }
 
-        // 3)Verifica que existan parciales para esa asignatura antes de cerrar
+        //Verifica que existan parciales para la asignatura antes de cerrar
         Asignatura asRef = null;
         for (Asignatura x : nivel.getMalla()) {
             if (x.getNombre() != null && x.getNombre().equalsIgnoreCase(asig)) { asRef = x; break; }
@@ -382,8 +381,45 @@ public class GestionEstudiante {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Inscripción", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
-    public void generarReporteTxt() {
         
+    public void generarReporteTxt() {
+        String[] tipos = {"Alumnos por nivel", "Rendimiento por nivel"};
+        String tipo = (String) javax.swing.JOptionPane.showInputDialog(
+                null, "Elige reporte:", "Reportes",
+                javax.swing.JOptionPane.QUESTION_MESSAGE, null, tipos, tipos[0]);
+        if (tipo == null) return;
+
+        try {
+            Reporte rep;
+
+            if ("Alumnos por nivel".equals(tipo)) {
+                String niv = javax.swing.JOptionPane.showInputDialog("Filtrar por nivel (opcional):");
+                rep = (niv == null || niv.isBlank())
+                        ? new ReporteAlumnoPorNivel()
+                        : new ReporteAlumnoPorNivel(niv.trim());
+            } else { // "Rendimiento por nivel"
+                String per = javax.swing.JOptionPane.showInputDialog("Periodo (opcional, ej: 2025-2):");
+                String niv = javax.swing.JOptionPane.showInputDialog("Nivel (opcional):");
+                rep = new ReporteRendimientoNivel(
+                        (per == null || per.isBlank()) ? null : per.trim(),
+                        (niv == null || niv.isBlank()) ? null : niv.trim()
+                );
+            }
+
+            java.nio.file.Path out = ExportadorTxt.export(rep, colegioGestor);
+
+            javax.swing.JOptionPane.showMessageDialog(
+                    null,
+                    rep.resumen() + "\n\nGuardado en:\n" + out.toAbsolutePath(),
+                    "Reporte TXT",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE
+            );
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            javax.swing.JOptionPane.showMessageDialog(
+                    null, "Error al generar reporte: " + ex.getMessage(),
+                    "Reportes", javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 }
