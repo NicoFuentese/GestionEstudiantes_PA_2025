@@ -79,7 +79,12 @@ public class Colegio {
         if(indiceAlumnos.containsKey(aa.getRut())) {throw new AlumnoDuplicadoException();}
         indiceAlumnos.put(aa.getRut(), aa); 
         
-        for(Nivel e : niveles){if(e.getNombre().equals(nivel)){e.agregarAlumno(aa);}}
+        for(Nivel e : niveles){
+            if(e.getNombre().equals(nivel)){
+                e.agregarAlumno(aa);
+                aa.agregarAsignaturas(new ArrayList<>(e.getMalla()));
+            }
+        }
         return true;
     }
      
@@ -102,7 +107,7 @@ public class Colegio {
     }
     
     public Nivel buscarNivel(String a) {
-        for(Nivel n : niveles) if(n.getNombre() == a) return n;
+        for(Nivel n : niveles) if(n.getNombre().equals(a)) return n;
         return null;
     }
     //Datos iniciales

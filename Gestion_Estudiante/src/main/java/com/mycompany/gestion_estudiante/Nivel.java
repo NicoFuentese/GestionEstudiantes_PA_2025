@@ -149,7 +149,123 @@ public class Nivel {
         agregarInscripcion(alumno, asig, periodo, "INSCRITO", 0.0);
     }
     
-    
+    /*
+    public boolean cerrarNotaFinal(String rut, String nombreAsig, String periodo)
+        throws InscripcionInvalidaException, InscripcionDuplicadaException {
+        
+        if (rut == null || nombreAsig == null || periodo == null) return false;
+        rut = rut.trim(); nombreAsig = nombreAsig.trim(); periodo = periodo.trim();
+        if (rut.isEmpty() || nombreAsig.isEmpty() || periodo.isEmpty()) return false;
+        
+        Alumno a = buscarAlumno(rut);
+        if (a == null) return false;
+        
+        Asignatura asig = null;
+        for (Asignatura as : malla) {
+            String n = as.getNombre();
+            if (n != null && n.trim().equalsIgnoreCase(nombreAsig)) { asig = as; break; }
+        }
+        if (asig == null) return false;
+        
+        List<Double> parciales = a.getNotasDeAsignatura(asig);
+        if (parciales == null || parciales.isEmpty()) return false;
+        
+        double suma = 0.0; int k = 0;
+        for (Double d : parciales) {
+            if (d != null && d >= 1.0 && d <= 7.0) { suma += d; k++; }
+        }
+        if (k == 0) return false;
+        
+        double notaFinal = suma / k;
+        String estado = (notaFinal >= 4.0) ? "APROBADO" : "REPROBADO";
+        
+        Inscripcion existente = null;
+        for (Inscripcion i : getInscripciones()) {
+            if (i.getAlumno() != null && rut.equals(i.getAlumno().getRut())
+                && i.getAsignatura() == asig
+                && periodo.equalsIgnoreCase(i.getPeriodo())) {
+                existente = i; break;
+            }
+        }
+        
+        if (existente == null) {
+            Inscripcion i = new Inscripcion();
+            i.setAlumno(a);
+            i.setAsignatura(asig);
+            i.setPeriodo(periodo);
+            i.setNotaFinal(notaFinal);
+            i.setEstado(estado);
+            agregarInscripcion(i); // versión A: valida duplicados/rangos
+        } else {
+            existente.setNotaFinal(notaFinal);
+            existente.setEstado(estado);
+        }
+        return true;
+        }
+    */
+    public boolean cerrarNotaFinal(String rut, String nombreAsig, String periodo)
+        throws InscripcionInvalidaException, InscripcionDuplicadaException {
+    if (rut == null || nombreAsig == null || periodo == null) return false;
+    rut = rut.trim(); nombreAsig = nombreAsig.trim(); periodo = periodo.trim();
+    if (rut.isEmpty() || nombreAsig.isEmpty() || periodo.isEmpty()) return false;
+
+    Alumno a = buscarAlumno(rut);
+    if (a == null) {
+        return false;
+    }
+    if (!getAlumnos().contains(a)) {
+        getAlumnos().add(a);
+    }
+
+    // 2) Asignatura del nivel (ignorando mayus)
+    Asignatura asig = null;
+    for (Asignatura x : malla) {
+        String n = x.getNombre();
+        if (n != null && n.trim().equalsIgnoreCase(nombreAsig)) { asig = x; break; }
+    }
+    if (asig == null) return false;
+
+    //Asegura que el alumno tenga inicializado su mapa de notas
+    a.agregarAsignaturas(new java.util.ArrayList<>(malla));
+
+    //Recupera parciales de la asignatura
+    java.util.List<Double> parciales = a.getNotasDeAsignatura(asig);
+    if (parciales == null || parciales.isEmpty()) return false;
+
+    double suma = 0.0; int k = 0;
+    for (Double d : parciales) {
+        if (d != null && d >= 1.0 && d <= 7.0) { suma += d; k++; }
+    }
+    if (k == 0) return false;
+
+    double notaFinal = suma / k;
+    String estado = (notaFinal >= 4.0) ? "APROBADO" : "REPROBADO";
+
+    //Buscar inscripcion existente
+    Inscripcion existente = null;
+    for (Inscripcion i : getInscripciones()) {
+        if (i.getAlumno() != null && rut.equals(i.getAlumno().getRut())
+                && i.getAsignatura() == asig
+                && periodo.equalsIgnoreCase(i.getPeriodo())) {
+            existente = i; break;
+        }
+    }
+
+    if (existente == null) {
+        Inscripcion i = new Inscripcion();
+        i.setAlumno(a);
+        i.setAsignatura(asig);
+        i.setPeriodo(periodo);
+        i.setNotaFinal(notaFinal);
+        i.setEstado(estado);
+        agregarInscripcion(i);
+    } else {
+        existente.setNotaFinal(notaFinal);
+        existente.setEstado(estado);
+    }
+    return true;
+}
+
     
     public boolean eliminarInscripcion(Inscripcion i){return inscripciones.remove(i);} 
 

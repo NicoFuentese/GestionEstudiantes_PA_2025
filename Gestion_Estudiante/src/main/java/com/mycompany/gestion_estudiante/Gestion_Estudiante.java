@@ -19,9 +19,8 @@ public class Gestion_Estudiante {
         System.out.println("Working Dir = " + new java.io.File("").getAbsolutePath());
         
         Colegio cole = DataStore.cargarTodo();
-        //if (cole.getNiveles().isEmpty()) { cole = Colegio.demo(); }
         
-        Colegio finalCole = cole; // para usar dentro del hook
+        Colegio finalCole = cole;
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             DataStore.guardarTodo(finalCole);
             System.out.println("[DataStore] Datos guardados en carpeta 'data/'.");
@@ -30,7 +29,7 @@ public class Gestion_Estudiante {
         GestionEstudiante gestor = new GestionEstudiante(cole);
         
         while (true) {
-            String[] opciones = {"Agregar alumno", "Mostrar lista alumno", "Alumnos con riesgo academico", "Modificar alumno", "agregar nota alumno", "Eliminar alumno", "Salir"};
+            String[] opciones = {"Agregar alumno", "Mostrar lista alumno", "Alumnos con riesgo academico", "Modificar alumno", "agregar nota alumno", "Eliminar alumno", "Cerrar asignatura (promediar y guardar)","Salir"};
             String opcion = (String) javax.swing.JOptionPane.showInputDialog(
                     null,
                     "Seleccione una opción:",
@@ -85,6 +84,15 @@ public class Gestion_Estudiante {
                     break;
                 case "Eliminar alumno":
                     gestor.eliminarAlumno();
+                    break;
+                case "Cerrar asignatura (promediar y guardar)":
+                    try {
+                        gestor.cerrarAsignatura();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(),
+                                "Cerrar asignatura", JOptionPane.ERROR_MESSAGE);
+                    }
                     break;
                 default:
                     break;

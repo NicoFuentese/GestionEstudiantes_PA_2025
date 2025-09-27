@@ -49,7 +49,7 @@ public class DataStore {
         try { Files.createDirectories(BASE); } catch (IOException ignored) {}
         
         guardarNiveles(c);
-        guardarAlumnos(c);               // recolecta desde niveles
+        guardarAlumnos(c);
         Map<Asignatura,String> kAsig = guardarAsignaturas(c);
         guardarInscripciones(c, kAsig);
         
@@ -152,7 +152,7 @@ public class DataStore {
 
                 Nivel n = IDX_NIVEL.get(nivelKey);
                 if (n != null) {
-                    n.getMalla().add(as); // <-- ajusta si tu método tiene otro nombre
+                    n.getMalla().add(as);
                 }
             }
         } catch (IOException e) { e.printStackTrace(); }
@@ -186,7 +186,7 @@ public class DataStore {
                     IDX_ALUMNO.put(rut, a);
                 }
 
-                // Nos aseguramos que el alumno esté en el nivel (si trabajas así):
+                //asegura que el alumno esta en el nivel
                 if (!n.getAlumnos().contains(a)) {
                     n.getAlumnos().add(a);
                 }
@@ -202,7 +202,7 @@ public class DataStore {
                 i.setPeriodo(periodo);
                 
                 try {
-                    n.agregarInscripcion(i); // tu versión A valida duplicados/rangos
+                    n.agregarInscripcion(i);
                 } catch (Exception ex) {
                     System.err.println("[WARN] Inscripción omitida (" + rut + "," + asigKey + "," + periodo + "): " + ex.getMessage());
                 }
@@ -210,8 +210,7 @@ public class DataStore {
         } catch (IOException e) { e.printStackTrace(); }
     }
 
-    /* ===================== GUARDADO ===================== */
-
+    //guardado
     private static void guardarNiveles(Colegio c) {
         Path p = BASE.resolve("niveles.csv");
         try (BufferedWriter bw = Files.newBufferedWriter(p, UTF_8)) {
@@ -273,7 +272,6 @@ public class DataStore {
         } catch (IOException e) { e.printStackTrace(); }
     }
 
-    /** Devuelve mapa estable Asignatura->asigKey para usar en inscripciones.csv */
     private static Map<Asignatura,String> guardarAsignaturas(Colegio c) {
         Path p = BASE.resolve("asignaturas.csv");
         Map<Asignatura,String> map = new HashMap<>();
@@ -282,7 +280,7 @@ public class DataStore {
             bw.write("asigKey;nombre;descripcion;profesor;creditos;nivelKey\n");
             for (Nivel n : c.getNiveles()) {
                 String nk = nivelKey(n);
-                for (Asignatura as : n.getMalla()) { // <-- ajusta si se llama distinto
+                for (Asignatura as : n.getMalla()) {
                     String ak = asigKey(as);
                     map.put(as, ak);
                     bw.write(String.join(SEP,
@@ -293,7 +291,7 @@ public class DataStore {
                         String.valueOf(as.getCreditos()),
                         nk
                     ));
-                    bw.write("\n");
+                      bw.write("\n");
                 }
             }
         } catch (IOException e) { e.printStackTrace(); }
@@ -355,7 +353,6 @@ public class DataStore {
     }
 
     private static String asigKey(Asignatura a) {
-        // Si tu Asignatura tiene "id/codigo", úsalo aquí en vez del slug del nombre.
         return slug(nn(a.getNombre()));
     }
 }

@@ -75,6 +75,12 @@ public class GestionEstudiante {
         Alumno n = new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, opcion, true);
  
         colegioGestor.registrarAlumno(n, opcion); 
+        
+        //inicializamos map notas del alumno
+        Nivel nv = colegioGestor.buscarNivel(opcion);
+        if (nv != null) {
+            n.agregarAsignaturas(new ArrayList<>(nv.getMalla()));
+        }
     }
     
     public void mostrarAlumnos() {
@@ -104,57 +110,131 @@ public class GestionEstudiante {
     JOptionPane.showMessageDialog(null, scroll, "Alumnos Registrados", JOptionPane.INFORMATION_MESSAGE);
 }
     public void agregarNotaAlumno(){
-        if ((colegioGestor.getIndiceAlumnos()).isEmpty()) {
-        JOptionPane.showMessageDialog(null, "No hay alumnos registrados.");
-        return;
-        }
         
-        String rut = JOptionPane.showInputDialog("Ingrese el RUT del alumno:");
-        if (rut == null || rut.isEmpty()) return;
-        
-        String a = JOptionPane.showInputDialog("Ingrese el nombre de la asignatura:");
-        if (a == null || a.isEmpty()) return;
-        
-        String nota = JOptionPane.showInputDialog("Ingrese la nota:");
-        if (a == null || a.isEmpty()) return;
-        
-        double nNota = Double.parseDouble(nota);
-        if(nNota < 1.0 || nNota > 7.0) return;
-        
-        String nN = (colegioGestor.getIndiceAlumnos()).get(rut).getNombreNivel();
-        colegioGestor.buscarNivel(nN).agregarNotaAlumno(rut, a, nNota);
-    }
-    public void mostrarAlumnosPeligro() {
-        if ((colegioGestor.getIndiceAlumnos()).isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No hay empleados registrados.");
+        if (colegioGestor.getIndiceAlumnos().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay alumnos registrados.");
             return;
         }
 
-        ArrayList<Alumno> listaPeligrantes = new ArrayList<>();
-        for (Alumno a : (colegioGestor.getIndiceAlumnos()).values()){
-            if(a.getPromedioGeneral() < 4.0 && a.calcularPromedioGeneral()) listaPeligrantes.add(a);
+        // RUT
+        String rut = JOptionPane.showInputDialog("Ingrese el RUT del alumno:");
+        if (rut == null || (rut = rut.trim()).isEmpty()) return;
+
+        Alumno alumno = colegioGestor.getIndiceAlumnos().get(rut);
+        if (alumno == null) {
+            JOptionPane.showMessageDialog(null, "No existe un alumno con RUT: " + rut);
+            return;
         }
 
-        String[] columnas = {"RUT", "Primer Nombre", "Segundo Nombre", 
-            "Primer Apellido", "Segundo Apellido", "email", "telefono"};
-        DefaultTableModel model = new DefaultTableModel(columnas, 0);
+        // Asignatura (nombre)
+        String nomAsig = JOptionPane.showInputDialog("Ingrese el nombre de la asignatura:");
+        if (nomAsig == null || (nomAsig = nomAsig.trim()).isEmpty()) return;
 
-        for (Alumno a : listaPeligrantes) {
-            model.addRow(new Object[]{
-                    a.getRut(),
-                    a.getNombre1(), a.getNombre2(),
-                    a.getApellido1(), a.getApellido2(),
-                    a.getEmail(),
-                    a.getTelefono()
-            });
+        // Nota (soportando coma)
+        String notaStr = JOptionPane.showInputDialog("Ingrese la nota (1.0–7.0):");
+        if (notaStr == null || (notaStr = notaStr.trim()).isEmpty()) return;
+        notaStr = notaStr.replace(',', '.');
+
+        double nNota;
+        try {
+            nNota = Double.parseDouble(notaStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Formato de nota inválido: " + notaStr);
+            return;
+        }
+        if (nNota < 1.0 || nNota > 7.0) {
+            JOptionPane.showMessageDialog(null, "La nota debe estar entre 1.0 y 7.0");
+            return;
         }
 
-        JTable table = new JTable(model);
+        // Nive
+        String nombreNivel = alumno.getNombreNivel();
+        Nivel nivel = (nombreNivel == null) ? null : colegioGestor.buscarNivel(nombreNivel);
+        if (nivel == null) {
+            nivel = buscarNivelQueContieneAsignatura(nomAsig);
+            if (nivel == null) {
+                JOptionPane.showMessageDialog(null, "No se encontró un nivel para la asignatura: " + nomAsig);
+                return;
+            }
+        }
+        
+        //garantizar que el alumno pertenezca a la lista del nivel
+        if (!nivel.getAlumnos().contains(alumno)) {
+            nivel.agregarAlumno(alumno);
+        }
 
-        JScrollPane scroll = new JScrollPane(table);
+        // Verifica que la asignatura exista en la malla del nivel
+        boolean existeAsig = false;
+        for (Asignatura as : nivel.getMalla()) {
+            if (as.getNombre() != null && as.getNombre().equalsIgnoreCase(nomAsig)) {
+                existeAsig = true;
+                break;
+            }
+        }
+        if (!existeAsig) {
+            JOptionPane.showMessageDialog(null, "La asignatura '" + nomAsig + "' no está en la malla del nivel '" + nivel.getNombre() + "'.");
+            return;
+        }
 
-        JOptionPane.showMessageDialog(null, scroll, "Alumnos Con Peligro Academico", JOptionPane.INFORMATION_MESSAGE);
-}
+        // Registrar la nota
+        try {
+            alumno.agregarAsignaturas(new java.util.ArrayList<>(nivel.getMalla()));
+            boolean ok = nivel.agregarNotaAlumno(rut, nomAsig, nNota);
+            if (!ok) {
+                JOptionPane.showMessageDialog(null,
+                    "No se pudo registrar la nota.\n" +
+                    "Verifica RUT y que la asignatura exista en la malla del nivel.");
+                return;
+            }
+            JOptionPane.showMessageDialog(null, "Nota registrada correctamente.");
+        } catch (Throwable t) {
+            t.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error al registrar la nota: " + t.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }        
+        }
+        public void mostrarAlumnosPeligro() {
+            if ((colegioGestor.getIndiceAlumnos()).isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No hay empleados registrados.");
+                return;
+            }
+
+            ArrayList<Alumno> listaPeligrantes = new ArrayList<>();
+            for (Alumno a : (colegioGestor.getIndiceAlumnos()).values()){
+                if(a.getPromedioGeneral() < 4.0 && a.calcularPromedioGeneral()) listaPeligrantes.add(a);
+            }
+
+            String[] columnas = {"RUT", "Primer Nombre", "Segundo Nombre", 
+                "Primer Apellido", "Segundo Apellido", "email", "telefono"};
+            DefaultTableModel model = new DefaultTableModel(columnas, 0);
+
+            for (Alumno a : listaPeligrantes) {
+                model.addRow(new Object[]{
+                        a.getRut(),
+                        a.getNombre1(), a.getNombre2(),
+                        a.getApellido1(), a.getApellido2(),
+                        a.getEmail(),
+                        a.getTelefono()
+                });
+            }
+
+            JTable table = new JTable(model);
+
+            JScrollPane scroll = new JScrollPane(table);
+
+            JOptionPane.showMessageDialog(null, scroll, "Alumnos Con Peligro Academico", JOptionPane.INFORMATION_MESSAGE);
+    }
+        
+    private Nivel buscarNivelQueContieneAsignatura(String nombreAsig) {
+        for (Nivel n : colegioGestor.getNiveles()) {
+            for (Asignatura as : n.getMalla()) {
+                if (as.getNombre() != null && as.getNombre().equalsIgnoreCase(nombreAsig)) {
+                    return n;
+                }
+            }
+        }
+        return null;
+    }
 
     public void modificarAlumno() {
     if ((colegioGestor.getIndiceAlumnos()).isEmpty()) {
@@ -201,5 +281,105 @@ public class GestionEstudiante {
             (colegioGestor.getIndiceAlumnos()).remove(rut);
             JOptionPane.showMessageDialog(null, "Alumno eliminado correctamente");
        }
+    }
+    /*
+    public void cerrarAsignatura() {
+        if (colegioGestor.getIndiceAlumnos().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay alumnos registrados.");
+            return;
+        }
+
+        String rut = JOptionPane.showInputDialog("RUT del alumno:");
+        if (rut == null || (rut = rut.trim()).isEmpty()) return;
+
+        Alumno a = colegioGestor.getIndiceAlumnos().get(rut);
+        if (a == null) { JOptionPane.showMessageDialog(null, "RUT no encontrado."); return; }
+
+        String asig = JOptionPane.showInputDialog("Nombre de la asignatura (como en la malla):");
+        if (asig == null || (asig = asig.trim()).isEmpty()) return;
+
+        String periodo = JOptionPane.showInputDialog(null, "Periodo (ej: 2025-2):", "2025-2");
+        if (periodo == null || (periodo = periodo.trim()).isEmpty()) return;
+
+        // Encontrar el nivel del alumno (o cualquiera que contenga la asignatura)
+        Nivel nivel = (a.getNombreNivel() == null) ? null : colegioGestor.buscarNivel(a.getNombreNivel());
+        if (nivel == null) {
+            // fallback: busca un nivel que tenga la asignatura
+            for (Nivel n : colegioGestor.getNiveles()) {
+                for (Asignatura x : n.getMalla()) {
+                    if (x.getNombre() != null && x.getNombre().equalsIgnoreCase(asig)) {
+                        nivel = n; break;
+                    }
+                }
+                if (nivel != null) break;
+            }
+        }
+        if (nivel == null) { JOptionPane.showMessageDialog(null, "No se encontró un nivel con esa asignatura."); return; }
+
+        try {
+            boolean ok = nivel.cerrarNotaFinal(rut, asig, periodo);
+            JOptionPane.showMessageDialog(null, ok ? "Nota final calculada y guardada." : "No fue posible cerrar la asignatura.");
+        } catch (InscripcionDuplicadaException | InscripcionInvalidaException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Inscripción", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    */
+    public void cerrarAsignatura() {
+        if (colegioGestor.getIndiceAlumnos().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay alumnos registrados.");
+            return;
+        }
+
+        String rut = JOptionPane.showInputDialog("RUT del alumno:");
+        if (rut == null || (rut = rut.trim()).isEmpty()) return;
+
+        Alumno a = colegioGestor.getIndiceAlumnos().get(rut);
+        if (a == null) { JOptionPane.showMessageDialog(null, "RUT no encontrado."); return; }
+
+        String asig = JOptionPane.showInputDialog("Nombre de la asignatura (como en la malla):");
+        if (asig == null || (asig = asig.trim()).isEmpty()) return;
+
+        String periodo = JOptionPane.showInputDialog(null, "Periodo (ej: 2025-2):", "2025-2");
+        if (periodo == null || (periodo = periodo.trim()).isEmpty()) return;
+
+        //Encontrar el nivel x nombre que guarda alumno
+        Nivel nivel = (a.getNombreNivel() == null) ? null : colegioGestor.buscarNivel(a.getNombreNivel());
+        // public Nivel buscarNivel(String x){ for(Nivel n:niveles) if (n.getNombre().equals(x)) return n; return null; }
+
+        //cualquier nivel que contenga la asignatura
+        if (nivel == null) {
+            for (Nivel n : colegioGestor.getNiveles()) {
+                for (Asignatura x : n.getMalla()) {
+                    if (x.getNombre() != null && x.getNombre().equalsIgnoreCase(asig)) { nivel = n; break; }
+                }
+                if (nivel != null) break;
+            }
+        }
+        if (nivel == null) { JOptionPane.showMessageDialog(null, "No se encontró un nivel con esa asignatura."); return; }
+
+        //Asegura que el alumno esté en la lista del nivel (si no, agregar)
+        if (!nivel.getAlumnos().contains(a)) {
+            nivel.agregarAlumno(a);
+        }
+
+        // 3)Verifica que existan parciales para esa asignatura antes de cerrar
+        Asignatura asRef = null;
+        for (Asignatura x : nivel.getMalla()) {
+            if (x.getNombre() != null && x.getNombre().equalsIgnoreCase(asig)) { asRef = x; break; }
+        }
+        if (asRef == null) { JOptionPane.showMessageDialog(null, "La asignatura no está en la malla del nivel."); return; }
+
+        java.util.List<Double> parciales = a.getNotasDeAsignatura(asRef);
+        if (parciales == null || parciales.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay notas parciales para esa asignatura. Agrega notas primero.");
+            return;
+        }
+
+        try {
+            boolean ok = nivel.cerrarNotaFinal(rut, asig, periodo);
+            JOptionPane.showMessageDialog(null, ok ? "Nota final calculada y guardada." : "No fue posible cerrar la asignatura.");
+        } catch (InscripcionDuplicadaException | InscripcionInvalidaException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage(), "Inscripción", JOptionPane.WARNING_MESSAGE);
+        }
     }
 }

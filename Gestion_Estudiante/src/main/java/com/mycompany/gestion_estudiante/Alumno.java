@@ -122,27 +122,45 @@ public class Alumno {
     }
     
     public boolean agregarAsignaturas(ArrayList<Asignatura> aamm){
-        if(aamm.isEmpty()) return false;
+        if(aamm.isEmpty() || aamm.isEmpty()) return false;
         
         for(Asignatura a : aamm)
         {
+            /*
             ArrayList <Double> nn = new ArrayList<>();
             notas.put(a, nn);
+            */
+            notas.computeIfAbsent(a, k -> new ArrayList<>());
         }
         return true;
     }
     
+    public void setPromedioGeneral(double promedioGeneral) {
+        this.promedioGeneral = promedioGeneral;
+    }
+    
+    public HashMap<Asignatura, ArrayList<Double>> getNotas() {
+        return notas;
+    }
+    public void setNotas(HashMap<Asignatura, ArrayList<Double>> notas) {
+        this.notas = (notas == null) ? new HashMap<>() : notas;
+    }
+    
     public boolean agregarNota(Asignatura a, double n){
-        if(!notas.containsKey(a)) {return false;}
+        //if(!notas.containsKey(a)) {return false;}
         if(a == null) {return false;}
-        
-        
+        notas.computeIfAbsent(a, k -> new ArrayList<>());
         (notas.get(a)).add(n);
-        
         this.calcularPromedioGeneral(); 
         return true;
     }
-    //necesita set¿
+    
+    public List<Double> getNotasDeAsignatura(Asignatura a) {
+        ArrayList<Double> xs = notas.get(a);
+        return (xs == null) ? java.util.Collections.emptyList() : xs;
+    }
+
+    //necesita set¿ No crack, si funciona
     public boolean calcularPromedioGeneral(){
         if(notas.isEmpty()) return false;
         int countA = 0;
@@ -185,7 +203,7 @@ public class Alumno {
                 ", Estado = " + (estadoAcademico ? "Activo":"Inactivo");
     }
     
-    //metodo main
+    //metodo main de prueba
     public static void main (String[] args) {
         Alumno a1 = new Alumno();
         System.out.println(a1);
