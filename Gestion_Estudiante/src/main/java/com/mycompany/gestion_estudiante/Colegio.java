@@ -14,7 +14,7 @@ public class Colegio {
     private String nombre;
     private String direccion;
     private String telefono;
-    private List<Nivel> niveles;
+    private ArrayList<Nivel> niveles;
     private HashMap<String, Alumno> indiceAlumnos;
     private boolean privada;
     
@@ -27,6 +27,7 @@ public class Colegio {
         this.privada = privada;
         this.niveles = new ArrayList<>();
         this.indiceAlumnos = new HashMap<>();
+        
     }
     
     //get y setters
@@ -73,16 +74,25 @@ public class Colegio {
     }
     
     //metodos alumnos
-    public boolean registrarAlumno(Alumno aa){
+    public boolean registrarAlumno(Alumno aa, String nivel) throws AlumnoDuplicadoException {
         if(aa == null)return false;
-        indiceAlumnos.put(aa.getRut(), aa);
+        if(indiceAlumnos.containsKey(aa.getRut())) {throw new AlumnoDuplicadoException();}
+        indiceAlumnos.put(aa.getRut(), aa); 
+        
+        for(Nivel e : niveles){
+            if(e.getNombre().equals(nivel)){
+                e.agregarAlumno(aa);
+                aa.agregarAsignaturas(new ArrayList<>(e.getMalla()));
+            }
+        }
         return true;
     }
-    
+     
     public boolean registrarAlumno (String rut, String nombre1, 
             String nombre2, String apellido1, String apellido2, 
-            int telefono, String email, boolean estadoAcademico) {
-        return registrarAlumno(new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, estadoAcademico));
+            String telefono, String email, boolean estadoAcademico,
+            String nivel)  throws AlumnoDuplicadoException {
+        return registrarAlumno(new Alumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, nivel, estadoAcademico), nivel);
     }
     
     public Alumno buscarAlumno(String rutAlumno)
@@ -96,38 +106,11 @@ public class Colegio {
         return niveles.add(n);
     }
     
-    public Nivel buscarNivel(int i) {
-        if (i >= 0 && i < niveles.size()) {
-            return niveles.get(i);
-        }
+    public Nivel buscarNivel(String a) {
+        for(Nivel n : niveles) if(n.getNombre().equals(a)) return n;
         return null;
     }
-    
     //Datos iniciales
-    public static Colegio demo() {
-        Colegio col = new Colegio("Colegio Saint Dominic", 
-                "7 norte con 1 poniente",
-                "+56911223344",
-                true);
-        
-        Nivel n1 = new Nivel("primer año",2025,"diurna","A",60,true);
-        Nivel n2 = new Nivel("segundo año",2025,"dierna","B",50,true);
-        
-        n1.getMalla().add(new Asignatura("MAT101","Cálculo I",6));
-        n2.getMalla().add(new Asignatura("EST201","Estadística",6));
-        
-        col.agregarNivel(n1);
-        col.agregarNivel(n2);
-        
-        //alumnos
-        col.registrarAlumno("11.111.111-1", "Ana", "Paula", "Perez","Roncaglia", 997205530, "ana@correo.cl", true);
-        col.registrarAlumno("22.222.222-2", "Luis", "Emilio", "Ramirez","Roco", 922334455, "luis@correo.cl", true);
-        
-        //asignar nivel
-        n1.agregarAlumno(col.getIndiceAlumnos().get("11.111.111-1"));
-        n1.agregarAlumno(col.getIndiceAlumnos().get("22.222.222-2"));
-        
-        return col;
-    }
+    
     
 }

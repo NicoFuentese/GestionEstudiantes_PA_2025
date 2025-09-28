@@ -4,117 +4,118 @@
 
 package com.mycompany.gestion_estudiante;
 
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Nicolas
  */
-import java.io.*;
-import java.util.*;
-
 public class Gestion_Estudiante {
-    
-    private static BufferedReader lector = new BufferedReader( new InputStreamReader( System.in));
-    
-    public static void main(String[] args) throws IOException{
+    public static void main(String [] args)
+    {
+        System.out.println("Working Dir = " + new java.io.File("").getAbsolutePath());
         
-        Colegio colegio = Colegio.demo();
-        int opcion;
+        Colegio cole = DataStore.cargarTodo();
         
-        do{
-            System.out.println("\n=== SISTEMA GESTIÓN ESTUDIANTES ===");
-            System.out.println("1) Insertar Alumno en un Nivel (manual)");
-            System.out.println("2) Listar Alumnos por Nivel");
-            System.out.println("3) Listar Niveles"); 
-            System.out.println("0) Salir"); 
-            System.out.println("Opcion: "); 
-            opcion = leerEntero();
-            
-            switch(opcion) {
-                case 1:
-                    insertarAlumnoEnNivel(colegio);
+        Colegio finalCole = cole;
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            DataStore.guardarTodo(finalCole);
+            System.out.println("[DataStore] Datos guardados en carpeta 'data/'.");
+        }));
+
+        GestionEstudiante gestor = new GestionEstudiante(cole);
+        
+        while (true) {
+            String[] opciones = {"Agregar alumno", "Mostrar lista alumno", 
+                "Alumnos con riesgo academico", "Modificar alumno", "Agregar nota alumno", 
+                "Eliminar alumno", "Cerrar asignatura (promediar y guardar)","Generar reporte (.txt)",
+                "Agregar nivel", "Modificar nivel", "Eliminar Nivel", "Buscar Alumno", "Salir"};
+            String opcion = (String) javax.swing.JOptionPane.showInputDialog(
+                    null,
+                    "Seleccione una opción:",
+                    "Menú Alumnos",
+                    javax.swing.JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opciones,
+                    opciones[0]
+            );
+
+            if (opcion == null || opcion.equals("Salir")) break;
+
+            switch (opcion) {
+                case "Agregar alumno":
+                    try
+                    {
+                        gestor.agregarAlumno();
+                    }
+                    catch(AlumnoDuplicadoException e){
+                        JOptionPane.showMessageDialog(
+                        null, 
+                        e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    }
+                    catch(TelefonoInvalidoException e){
+                        JOptionPane.showMessageDialog(
+                        null, 
+                        e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    }
+                    catch(EmailInvalidoException e){
+                        JOptionPane.showMessageDialog(
+                        null, 
+                        e.getMessage(),
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                    }
                     break;
-                case 2: 
-                    listarAlumnosPorNivel(colegio);
+                case "Mostrar lista alumno":
+                    gestor.mostrarAlumnos();
                     break;
-                case 3: 
-                    listarNiveles(colegio);
+                case "Alumnos con riesgo academico":
+                    gestor.mostrarAlumnosPeligro();
                     break;
-                case 0: 
-                    System.out.println("Hasta luego!");
-                    return;
-                default: 
-                    System.out.println("Opcion invalida.");
+                case "Modificar alumno":
+                    gestor.modificarAlumno();
+                    break;
+                case "agregar nota alumno":
+                    gestor.agregarNotaAlumno();
+                    break;
+                case "Eliminar alumno":
+                    gestor.eliminarAlumno();
+                    break;
+                case "Cerrar asignatura (promediar y guardar)":
+                    try {
+                        gestor.cerrarAsignatura();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(),
+                                "Cerrar asignatura", JOptionPane.ERROR_MESSAGE);
+                    }
+                    break;
+                case "Generar reporte (.txt)":
+                    gestor.generarReporteTxt();
+                    break;
+                case "Agregar nivel":
+                    gestor.agregarNivel();
+                    break;
+                case "Modificar nivel":
+                    gestor.modificarNivel();
+                    break;
+                case "Eliminar Nivel":
+                    gestor.eliminarNivel();
+                    break;
+                case "Buscar Alumno":
+                    gestor.buscarAlumno();
+                    break;
+                default:
                     break;
             }
-        } while(opcion != 0);
-    }
-    
-    public static int leerEntero()throws IOException {
-        while(true) {
-            String entrada = lector.readLine();
-            if (entrada.trim().matches("[0-9]+")) {
-                return Integer.parseInt(entrada);
-            } else {
-                System.out.println("No es un numero, ingreselo nuevamente");
-            }
         }
-    }
-    
-    public static void insertarAlumnoEnNivel(Colegio col) throws IOException{
-        listarNiveles(col);
-        System.out.println("Seleccione indice de nivel: ");
-        int idx = leerEntero();
-        Nivel nivel = col.buscarNivel(idx);
-        if (nivel == null) {
-            System.out.println("Nivel no encontrado.");
-            return;
-        }
-        
-        System.out.println("Rut: ");
-        String rut = lector.readLine().trim();
-        System.out.println("Nombre 1: ");
-        String nombre1 = lector.readLine().trim();
-        System.out.println("Nombre 2: ");
-        String nombre2 = lector.readLine().trim();
-        System.out.println("apellido 1: ");
-        String apellido1 = lector.readLine().trim();
-        System.out.println("apellido 2: ");
-        String apellido2 = lector.readLine().trim();
-        System.out.println("Telefono: ");
-        int telefono = Integer.parseInt(lector.readLine().trim());
-        System.out.println("Email: ");
-        String email = lector.readLine().trim();
-        System.out.println("Estado Academico: ");
-        boolean estadoAcademico = Boolean.parseBoolean(lector.readLine().trim());
-        
-        col.registrarAlumno(rut, nombre1, nombre2, apellido1, apellido2, telefono, email, estadoAcademico);
-        boolean ok = nivel.agregarAlumno(col.getIndiceAlumnos().get(rut));
-        
-        if (ok) System.out.println("Alumno agregado al nivel");
-        else System.out.println("No se pudo agregar alumno al nivel");
-    }
-    
-    public static void listarNiveles(Colegio col) {
-        System.out.println("Niveles del colegio:");
-        for (int i = 0; i < col.getNiveles().size(); i++) {
-            System.out.println(i + ")" + col.getNiveles().get(i));
-        }
-    }
-    
-    public static void listarAlumnosPorNivel (Colegio col) throws IOException{
-        listarNiveles(col);
-        System.out.println("Seleccion indice de nivel :");
-        int idx = leerEntero();
-        Nivel nivel = col.buscarNivel(idx);
-        if (nivel == null) {
-            System.out.println("Nivel no encontrado");
-            return;
-        }
-        
-        List<Alumno> lista = nivel.getAlumnos();
-        if(lista.isEmpty()) System.out.println("Sin alumnos en este nivel");
-        
-        System.out.println("\nAlumnos en " + nivel + ":");
-        for(Alumno a : lista) System.out.println(" - " + a);
     }
 }
+
