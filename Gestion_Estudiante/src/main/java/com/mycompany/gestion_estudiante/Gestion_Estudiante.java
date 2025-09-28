@@ -29,7 +29,10 @@ public class Gestion_Estudiante {
         GestionEstudiante gestor = new GestionEstudiante(cole);
         
         while (true) {
-            String[] opciones = {"Agregar alumno", "Mostrar lista alumno", "Alumnos con riesgo academico", "Modificar alumno", "agregar nota alumno", "Eliminar alumno", "Cerrar asignatura (promediar y guardar)","Generar reporte (.txt)","Salir"};
+            String[] opciones = {"Agregar alumno", "Mostrar lista alumno", 
+                "Alumnos con riesgo academico", "Modificar alumno", "Agregar nota alumno", 
+                "Eliminar alumno", "Cerrar asignatura (promediar y guardar)","Generar reporte (.txt)",
+                "Agregar nivel", "Modificar nivel", "Eliminar Nivel", "Buscar Alumno", "Salir"};
             String opcion = (String) javax.swing.JOptionPane.showInputDialog(
                     null,
                     "Seleccione una opción:",
@@ -96,6 +99,18 @@ public class Gestion_Estudiante {
                     break;
                 case "Generar reporte (.txt)":
                     gestor.generarReporteTxt();
+                    break;
+                case "Agregar nivel":
+                    gestor.agregarNivel();
+                    break;
+                case "Modificar nivel":
+                    gestor.modificarNivel();
+                    break;
+                case "Eliminar Nivel":
+                    gestor.eliminarNivel();
+                    break;
+                case "Buscar Alumno":
+                    gestor.buscarAlumno();
                     break;
                 default:
                     break;

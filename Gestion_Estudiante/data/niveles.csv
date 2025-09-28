@@ -1,5 +1,4 @@
 nivelKey;nombre;anio;jornada;paralelo;capacidad;activo
-primero-basico_2025_diurna_a;primero basico;2025;diurna;A;60;true
 segundo-basico_2025_diurna_a;segundo basico;2025;diurna;A;50;true
 tercero-basico_2025_diurna_a;tercero basico;2025;diurna;A;50;true
 cuarto-basico_2025_diurna_a;cuarto basico;2025;diurna;A;50;true
@@ -11,7 +10,6 @@ primero-medio_2025_diurna_a;primero medio;2025;diurna;A;50;true
 segundo-medio_2025_diurna_a;segundo medio;2025;diurna;A;50;true
 tercero-medio_2025_diurna_a;tercero medio;2025;diurna;A;50;true
 cuarto-medio_2025_diurna_a;cuarto medio;2025;diurna;A;50;true
-primero-basico_2025_diurna_a;primero basico;2025;diurna;A;60;true
 segundo-basico_2025_diurna_a;segundo basico;2025;diurna;A;50;true
 tercero-basico_2025_diurna_a;tercero basico;2025;diurna;A;50;true
 cuarto-basico_2025_diurna_a;cuarto basico;2025;diurna;A;50;true
@@ -23,7 +21,6 @@ primero-medio_2025_diurna_a;primero medio;2025;diurna;A;50;true
 segundo-medio_2025_diurna_a;segundo medio;2025;diurna;A;50;true
 tercero-medio_2025_diurna_a;tercero medio;2025;diurna;A;50;true
 cuarto-medio_2025_diurna_a;cuarto medio;2025;diurna;A;50;true
-primero-basico_2025_diurna_a;primero basico;2025;diurna;A;60;true
 segundo-basico_2025_diurna_a;segundo basico;2025;diurna;A;50;true
 tercero-basico_2025_diurna_a;tercero basico;2025;diurna;A;50;true
 cuarto-basico_2025_diurna_a;cuarto basico;2025;diurna;A;50;true
@@ -35,7 +32,6 @@ primero-medio_2025_diurna_a;primero medio;2025;diurna;A;50;true
 segundo-medio_2025_diurna_a;segundo medio;2025;diurna;A;50;true
 tercero-medio_2025_diurna_a;tercero medio;2025;diurna;A;50;true
 cuarto-medio_2025_diurna_a;cuarto medio;2025;diurna;A;50;true
-primero-basico_2025_diurna_a;primero basico;2025;diurna;A;60;true
 segundo-basico_2025_diurna_a;segundo basico;2025;diurna;A;50;true
 tercero-basico_2025_diurna_a;tercero basico;2025;diurna;A;50;true
 cuarto-basico_2025_diurna_a;cuarto basico;2025;diurna;A;50;true
@@ -61,3 +57,5 @@ tercero-medio_2025_diurna_a;tercero medio;2025;diurna;A;50;true
 cuarto-medio_2025_diurna_a;cuarto medio;2025;diurna;A;50;true
 primero_2025_diurna_a;Primero;2025;diurna;A;40;true
 segundo_2025_diurna_a;Segundo;2025;diurna;A;40;true
+primero-basico-b_2_nocturna_b;primero basico b;2;nocturna;b;10;false
+sexto-basico4_2025_diurna_4;sexto basico4;2025;diurna;4;1000;true

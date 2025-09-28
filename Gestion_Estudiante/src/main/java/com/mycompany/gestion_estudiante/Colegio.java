@@ -25,7 +25,7 @@ public class Colegio {
         this.direccion = direccion;
         this.telefono = telefono;
         this.privada = privada;
-        this.niveles = inicializarNiveles();
+        this.niveles = new ArrayList<>();
         this.indiceAlumnos = new HashMap<>();
         
     }
@@ -111,57 +111,6 @@ public class Colegio {
         return null;
     }
     //Datos iniciales
-    public ArrayList<Nivel> inicializarNiveles() {
-        
-        ArrayList<Nivel> niveles = new ArrayList<>();
-        
-        Nivel n1 = new Nivel("primero basico",2025,"diurna","A",60,true);
-        n1.getMalla().add(new Asignatura("matematicas"));
-        niveles.add(n1);
-        Nivel n2 = new Nivel("segundo basico",2025,"diurna","A",50,true);
-        n2.getMalla().add(new Asignatura("matematicas"));
-        niveles.add(n2);
-        Nivel n3 = new Nivel("tercero basico",2025,"diurna","A",50,true);
-        n3.getMalla().add(new Asignatura("matematicas"));
-        niveles.add(n3);
-        Nivel n4 = new Nivel("cuarto basico",2025,"diurna","A",50,true);
-        n4.getMalla().add(new Asignatura("matematicas"));
-        niveles.add(n4);
-        Nivel n5 = new Nivel("quinto basico",2025,"diurna","A",50,true);
-        n5.getMalla().add(new Asignatura("matematicas"));
-        niveles.add(n5);
-        Nivel n6 = new Nivel("sexto basico",2025,"diurna","A",50,true);
-        n6.getMalla().add(new Asignatura("matematicas"));
-        niveles.add(n6);
-        Nivel n7 = new Nivel("septimo basico",2025,"diurna","A",50,true);
-        n7.getMalla().add(new Asignatura("matematicas"));
-        niveles.add(n7);
-        Nivel n8 = new Nivel("octavo basico",2025,"diurna","A",50,true);
-        n8.getMalla().add(new Asignatura("matematicas"));
-        niveles.add(n8);
-        Nivel n9 = new Nivel("primero medio",2025,"diurna","A",50,true);
-        n9.getMalla().add(new Asignatura("matematicas"));
-        niveles.add(n9);
-        Nivel n10 = new Nivel("segundo medio",2025,"diurna","A",50,true);
-        n10.getMalla().add(new Asignatura("matematicas"));
-        niveles.add(n10);
-        Nivel n11 = new Nivel("tercero medio",2025,"diurna","A",50,true);
-        n11.getMalla().add(new Asignatura("matematicas"));
-        niveles.add(n11);
-        Nivel n12 = new Nivel("cuarto medio",2025,"diurna","A",50,true);
-        n12.getMalla().add(new Asignatura("matematicas"));
-        niveles.add(n12);
-        
-        
-        //alumnos
-        //col.registrarAlumno("11.111.111-1", "Ana", "Paula", "Perez","Roncaglia", 997205530, "ana@correo.cl", true);
-        //col.registrarAlumno("22.222.222-2", "Luis", "Emilio", "Ramirez","Roco", 922334455, "luis@correo.cl", true);
-        
-        //asignar nivel
-        //n1.agregarAlumno(col.getIndiceAlumnos().get("11.111.111-1"));
-        //n1.agregarAlumno(col.getIndiceAlumnos().get("22.222.222-2"));
-        
-        return niveles;
-    }
+    
     
 }

@@ -271,6 +271,7 @@ public class GestionEstudiante {
         String rut = JOptionPane.showInputDialog("Ingrese el RUT del alumno a eliminar:");
         if (rut == null || rut.isEmpty()) return;
 
+        if((colegioGestor.getIndiceAlumnos()).containsKey(rut)) return;
         Alumno a = (colegioGestor.getIndiceAlumnos()).get(rut);
         int confirm = JOptionPane.showConfirmDialog(null,
                 "¿Está seguro que desea eliminar a " + a.getNombre1() + "?",
@@ -422,4 +423,200 @@ public class GestionEstudiante {
             );
         }
     }
-}
+    
+    public void agregarNivel() {
+        
+        String[] opciones = {"primero basico","segundo basico", 
+            "tercero basico", "cuarto basico", 
+            "quinto basico","sexto basico", 
+            "septimo basico", "octavo basico", 
+            "primero medio","segundo medio", 
+            "tercero medio", "cuarto medio"};
+        
+        String nombre = (String) javax.swing.JOptionPane.showInputDialog(
+                    null,
+                    "Seleccione un nivel agregable:",
+                    "Menú Alumnos",
+                    javax.swing.JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opciones,
+                    opciones[0]
+        );
+        
+        String letra = JOptionPane.showInputDialog("Ingrese letra paralelo nivel");
+        if (letra == null || (letra = letra.trim()).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Jornada no válida.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        nombre = nombre + " " + letra;
+        
+        if (nombre == null || (nombre = nombre.trim()).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nombre de nivel no válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Verificar si el nivel ya existe
+        if (colegioGestor.buscarNivel(nombre) != null) {
+            JOptionPane.showMessageDialog(null, "Ya existe un nivel con el nombre: " + nombre, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int anio = java.time.LocalDate.now().getYear();
+        
+        String[] opciones2 = {"diurna", "nocturna"};
+        
+        String jornada = (String) javax.swing.JOptionPane.showInputDialog(
+                    null,
+                    "Seleccione una jornada:",
+                    "Menú Alumnos",
+                    javax.swing.JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opciones2,
+                    opciones2[0]
+        );
+
+        String capacidadStr = JOptionPane.showInputDialog("Ingrese la capacidad del nivel (ej: 50):");
+        if (capacidadStr == null || (capacidadStr = capacidadStr.trim()).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Capacidad no válida.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int capacidad;
+        try {
+            capacidad = Integer.parseInt(capacidadStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "La capacidad debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        boolean activo = true;
+        // Crear y registrar el nuevo nivel
+        Nivel nuevoNivel = new Nivel(nombre, anio, jornada, letra, capacidad, activo);
+        colegioGestor.agregarNivel(nuevoNivel);
+        JOptionPane.showMessageDialog(null, "Nivel " + nombre + " agregado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // Método para modificar un nivel
+    public void modificarNivel() {
+        if (colegioGestor.getNiveles().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay niveles registrados.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre del nivel a modificar:");
+        if (nombre == null || (nombre = nombre.trim()).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nombre de nivel no válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Nivel nivel = colegioGestor.buscarNivel(nombre);
+        if (nivel == null) {
+            JOptionPane.showMessageDialog(null, "No se encontró un nivel con el nombre: " + nombre, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+
+        String[] opciones2 = {"diurna", "nocturna"};
+        
+        String jornada = (String) javax.swing.JOptionPane.showInputDialog(
+                    null,
+                    "Seleccione una jornada:",
+                    "Menú Alumnos",
+                    javax.swing.JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    opciones2,
+                    opciones2[0]
+        );
+
+        String capacidadStr = JOptionPane.showInputDialog("Ingrese la nueva capacidad (ej: 50):", String.valueOf(nivel.getCantidadMaximaAlumnos()));
+        if (capacidadStr != null && !(capacidadStr = capacidadStr.trim()).isEmpty()) {
+            try {
+                nivel.setCantidadMaximaAlumnos(Integer.parseInt(capacidadStr));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "La capacidad debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+        int activoOption = JOptionPane.showConfirmDialog(null, "¿El nivel está activo?", "Estado del nivel", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+        if (activoOption >= 0) {
+            nivel.setActivo(activoOption == JOptionPane.YES_OPTION);
+        }
+
+        JOptionPane.showMessageDialog(null, "Nivel modificado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // Método para eliminar un nivel
+    public void eliminarNivel() {
+        if (colegioGestor.getNiveles().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay niveles registrados.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String nombre = JOptionPane.showInputDialog("Ingrese el nombre del nivel a eliminar:");
+        if (nombre == null || (nombre = nombre.trim()).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Nombre de nivel no válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Nivel nivel = colegioGestor.buscarNivel(nombre);
+        if (nivel == null) {
+            JOptionPane.showMessageDialog(null, "No se encontró un nivel con el nombre: " + nombre, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!nivel.getAlumnos().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se puede eliminar el nivel porque tiene " + nivel.getAlumnos().size() + " alumnos registrados.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(null,
+                "¿Está seguro que desea eliminar el nivel " + nivel.getNombre() + "?",
+                "Confirmar eliminación",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            colegioGestor.getNiveles().remove(nivel);
+            JOptionPane.showMessageDialog(null, "Nivel eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+    public void buscarAlumno() {
+        if (colegioGestor.getIndiceAlumnos().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No hay alumnos registrados.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String rut = JOptionPane.showInputDialog("Ingrese el RUT del alumno a buscar:");
+        if (rut == null || (rut = rut.trim()).isEmpty()) {
+            JOptionPane.showMessageDialog(null, "RUT no válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Alumno alumno = colegioGestor.buscarAlumno(rut);
+        if (alumno == null) {
+            JOptionPane.showMessageDialog(null, "No se encontró un alumno con el RUT: " + rut, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Mostrar la información del alumno en una tabla
+        String[] columnas = {"RUT", "1er Nombre", "2do Nombre", "1er Apellido", "2do Apellido", "Email", "Teléfono", "Nivel", "Promedio", "Estado"};
+        DefaultTableModel model = new DefaultTableModel(columnas, 0);
+
+        model.addRow(new Object[]{
+                alumno.getRut(),
+                alumno.getNombre1(),
+                alumno.getNombre2(),
+                alumno.getApellido1(),
+                alumno.getApellido2(),
+                alumno.getEmail(),
+                alumno.getTelefono(),
+                alumno.getNombreNivel(),
+                String.format("%.2f", alumno.getPromedioGeneral()),
+                alumno.getEstadoAcademico() ? "Activo" : "Inactivo"
+        });
+
+        JTable table = new JTable(model);
+        JScrollPane scroll = new JScrollPane(table);
+        JOptionPane.showMessageDialog(null, scroll, "Información del Alumno", JOptionPane.INFORMATION_MESSAGE);
+    }
+} 

@@ -121,6 +121,16 @@ public class Alumno {
         this.estadoAcademico = estadoAcademico;
     }
     
+    public String getNombreNivel()
+    {
+        return nombreNivel;
+    }
+    
+    public void setNombreNivel(String nn)
+    {
+        nombreNivel = nn;
+    }
+    
     public boolean agregarAsignaturas(ArrayList<Asignatura> aamm){
         if(aamm.isEmpty() || aamm.isEmpty()) return false;
         
@@ -189,9 +199,6 @@ public class Alumno {
         return promedioGeneral;
     }
     
-    public String getNombreNivel(){
-        return nombreNivel;
-    }
     
     @Override
     public String toString() {
