@@ -40,21 +40,21 @@ Es una aplicación en Java para gestionar estudiantes en un colegio, permitiendo
 
 ## Estructura del Proyecto
 
-- `src/com/mycompany/gestion_estudiante/Alumno.java`: Modela un alumno con RUT, nombres, apellidos, teléfono, email, estado académico, nivel asignado, y mapa de notas por asignatura.
-- `src/com/mycompany/gestion_estudiante/Asignatura.java`: Modela una asignatura con nombre (único), descripción, profesor, y créditos.
-- `src/com/mycompany/gestion_estudiante/Nivel.java`: Modela un nivel académico con nombre, año, jornada, paralelo, capacidad máxima, estado activo, listas de alumnos, asignaturas, e inscripciones.
-- `src/com/mycompany/gestion_estudiante/Colegio.java`: Modela un colegio con nombre, dirección, teléfono, estado privado, lista de niveles, y mapa de alumnos por RUT.
-- `src/com/mycompany/gestion_estudiante/Inscripcion.java`: Modela la relación alumno-asignatura con estado (inscrito, aprobado, reprobado), nota final, y periodo.
-- `src/com/mycompany/gestion_estudiante/DataStore.java`: Maneja persistencia en archivos CSV (`data/alumnos.csv`, `niveles.csv`, `asignaturas.csv`, `inscripciones.csv`).
-- `src/com/mycompany/gestion_estudiante/ExportadorTxt.java`: Exporta reportes a archivos de texto.
-- `src/com/mycompany/gestion_estudiante/Reporte.java`: Clase abstracta para reportes, con métodos `resumen` y `generar`.
-- `src/com/mycompany/gestion_estudiante/ReporteAlumnoPorNivel.java`: Genera reportes de ocupación por nivel.
-- `src/com/mycompany/gestion_estudiante/ReporteRendimientoNivel.java`: Genera reportes de rendimiento (promedio, mediana, tasa de aprobación).
-- `src/com/mycompany/gestion_estudiante/GestionEstudiante.java`: Gestiona operaciones como agregar, modificar, eliminar alumnos y niveles, y buscar alumnos.
-- `src/com/mycompany/gestion_estudiante/Gestion_Estudiante.java`: Clase principal con la interfaz de consola y el método `main`.
-- `src/com/mycompany/gestion_estudiante/AlumnoDuplicadoException.java`: Excepción para alumnos duplicados.
-- `src/com/mycompany/gestion_estudiante/EmailInvalidoException.java`: Excepción para emails inválidos.
-- `src/com/mycompany/gestion_estudiante/InscripcionInvalidaException.java`: Excepción para inscripciones inválidas.
+- `Alumno.java`: Modela un alumno con RUT, nombres, apellidos, teléfono, email, estado académico, nivel asignado, y mapa de notas por asignatura.
+- `Asignatura.java`: Modela una asignatura con nombre (único), descripción, profesor, y créditos.
+- `Nivel.java`: Modela un nivel académico con nombre, año, jornada, paralelo, capacidad máxima, estado activo, listas de alumnos, asignaturas, e inscripciones.
+- `Colegio.java`: Modela un colegio con nombre, dirección, teléfono, estado privado, lista de niveles, y mapa de alumnos por RUT.
+- `Inscripcion.java`: Modela la relación alumno-asignatura con estado (inscrito, aprobado, reprobado), nota final, y periodo.
+- `DataStore.java`: Maneja persistencia en archivos CSV (`data/alumnos.csv`, `niveles.csv`, `asignaturas.csv`, `inscripciones.csv`).
+- `ExportadorTxt.java`: Exporta reportes a archivos de texto.
+- `Reporte.java`: Clase abstracta para reportes, con métodos `resumen` y `generar`.
+- `ReporteAlumnoPorNivel.java`: Genera reportes de ocupación por nivel.
+- `ReporteRendimientoNivel.java`: Genera reportes de rendimiento (promedio, mediana, tasa de aprobación).
+- `GestionEstudiante.java`: Gestiona operaciones como agregar, modificar, eliminar alumnos y niveles, y buscar alumnos.
+- `Gestion_Estudiante.java`: Clase principal con la interfaz de consola y el método `main`.
+- `AlumnoDuplicadoException.java`: Excepción para alumnos duplicados.
+- `EmailInvalidoException.java`: Excepción para emails inválidos.
+- `InscripcionInvalidaException.java`: Excepción para inscripciones inválidas.
 - `src/com/mycompany/gestion_estudiante/InscripcionDuplicadaException.java`: Excepción para inscripciones duplicadas.
 - `src/com/mycompany/gestion_estudiante/TelefonoInvalidoException.java`: Excepción para teléfonos inválidos.
 - `.gitignore`: Ignora archivos generados como `.class`, `bin/`, `.idea/`, `*.iml`, `out/`.
